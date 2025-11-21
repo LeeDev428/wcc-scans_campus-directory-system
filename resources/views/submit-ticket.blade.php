@@ -81,21 +81,23 @@
     </div>
 </body>
 <script>
-    // Enter fullscreen mode on load
+    // Enter fullscreen mode
     function enterFullscreen() {
         const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-            elem.msRequestFullscreen();
+        if (!document.fullscreenElement) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
         }
     }
 
-    // Enter fullscreen when page loads
-    window.addEventListener('load', function() {
+    // Enter fullscreen on any click
+    document.addEventListener('click', function() {
         enterFullscreen();
-    });
+    }, { once: true });
 </script>
 </html>
