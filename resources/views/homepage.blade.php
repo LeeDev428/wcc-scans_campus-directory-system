@@ -59,7 +59,7 @@
             <!-- WCC SCAN Logo -->
             <div class="flex items-center space-x-3">
                 <div class="border-2 border-white p-2 rounded">
-                    <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC" class="h-20 w-auto">
+                    <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC" class="h-16 w-auto">
                 </div>
                 <div class="text-white">
                     <h1 class="text-5xl font-bold tracking-wider">SCAN</h1>
@@ -69,7 +69,7 @@
 
             <!-- Airplane Logo -->
             <div>
-                <img src="{{ asset('img/wcc-scans-airplain-logo.png') }}" alt="Aviation Logo" class="h-20 w-auto">
+                <img src="{{ asset('img/wcc-scans-airplain-logo.png') }}" alt="Aviation Logo" class="h-16 w-auto">
             </div>
         </div>
 
