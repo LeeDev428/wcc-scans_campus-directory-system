@@ -142,40 +142,4 @@
         </div>
     </div>
 </body>
-<script>
-    // Automatically re-enter fullscreen on page load if user confirmed
-    window.addEventListener('load', function() {
-        if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
-            // Small delay to ensure page is loaded
-            setTimeout(function() {
-                const elem = document.documentElement;
-                if (!document.fullscreenElement) {
-                    if (elem.requestFullscreen) {
-                        elem.requestFullscreen().catch(err => {
-                            console.log('Fullscreen request failed:', err);
-                        });
-                    } else if (elem.webkitRequestFullscreen) {
-                        elem.webkitRequestFullscreen();
-                    } else if (elem.msRequestFullscreen) {
-                        elem.msRequestFullscreen();
-                    }
-                }
-            }, 100);
-        }
-    });
-
-    // Also try to maintain fullscreen on any click
-    document.addEventListener('click', function(e) {
-        if (sessionStorage.getItem('fullscreenConfirmed') === 'true' && !document.fullscreenElement) {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen().catch(err => {});
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        }
-    }, { once: true });
-</script>
 </html>
