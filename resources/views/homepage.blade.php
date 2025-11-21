@@ -52,10 +52,7 @@
             <!-- QR Code & Avionics Society -->
             <div class="flex items-center space-x-3">
                 <div class="p-2 rounded">
-                    <img src="{{ asset('img/wcc-scans-logo.png') }}" alt="QR Code" class="w-16 h-16">
-                </div>
-                <div class="text-white text-xs font-semibold">
-                    AVIONICS SOCIETY PB
+                    <img src="{{ asset('img/wcc-scans-logo.png') }}" alt="QR Code" class="w-24 h-24">
                 </div>
             </div>
 
