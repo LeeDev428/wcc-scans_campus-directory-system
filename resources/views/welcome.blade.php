@@ -147,34 +147,23 @@
                 document.getElementById('fullscreenModal').classList.add('show');
             });
 
-            // Handle F11 button click - exact F11 key behavior
-            document.getElementById('fullscreenBtn').addEventListener('click', function() {
+            // Handle F11 button click
+            const btn = document.getElementById('fullscreenBtn');
+            btn.addEventListener('click', () => {
                 // Hide modal
                 document.getElementById('fullscreenModal').classList.remove('show');
                 
                 // Save confirmation
                 sessionStorage.setItem('fullscreenConfirmed', 'true');
                 
-                // Enter fullscreen with exact F11 behavior
-                const elem = document.documentElement;
-                
-                if (!document.fullscreenElement && 
-                    !document.webkitFullscreenElement && 
-                    !document.mozFullScreenElement && 
-                    !document.msFullscreenElement) {
-                    
-                    // Request fullscreen with all browser prefixes
-                    if (elem.requestFullscreen) {
-                        elem.requestFullscreen().catch(err => {
-                            console.log('Fullscreen request failed:', err);
-                        });
-                    } else if (elem.webkitRequestFullscreen) {
-                        elem.webkitRequestFullscreen();
-                    } else if (elem.mozRequestFullScreen) {
-                        elem.mozRequestFullScreen();
-                    } else if (elem.msRequestFullscreen) {
-                        elem.msRequestFullscreen();
-                    }
+                // Enter full-screen
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch((err) => {
+                        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                    });
+                } else {
+                    // Exit full-screen
+                    document.exitFullscreen();
                 }
             });
         }
