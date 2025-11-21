@@ -45,8 +45,8 @@
         }
     </style>
 </head>
-<body class="antialiased">
-    <div class="gradient-bg min-h-screen flex flex-col">
+<body class="antialiased overflow-hidden">
+    <div class="gradient-bg h-screen w-screen flex flex-col overflow-hidden">
         <!-- Header -->
         <div class="flex items-center justify-between p-4">
             <!-- QR Code & Avionics Society -->
