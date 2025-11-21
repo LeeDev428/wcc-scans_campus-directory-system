@@ -142,21 +142,27 @@
         const fullscreenConfirmed = sessionStorage.getItem('fullscreenConfirmed');
         
         if (!fullscreenConfirmed) {
-            // Show popup on page load
+            // Show modal on page load
             window.addEventListener('load', function() {
-                const userConfirmed = confirm('This application needs to run in fullscreen mode for the best experience. Click OK to continue.');
+                document.getElementById('fullscreenModal').classList.add('show');
+            });
+
+            // Handle OK button click
+            document.getElementById('fullscreenBtn').addEventListener('click', function() {
+                // Hide modal
+                document.getElementById('fullscreenModal').classList.remove('show');
                 
-                if (userConfirmed) {
-                    sessionStorage.setItem('fullscreenConfirmed', 'true');
-                    // Enter fullscreen
-                    const elem = document.documentElement;
-                    if (elem.requestFullscreen) {
-                        elem.requestFullscreen();
-                    } else if (elem.webkitRequestFullscreen) {
-                        elem.webkitRequestFullscreen();
-                    } else if (elem.msRequestFullscreen) {
-                        elem.msRequestFullscreen();
-                    }
+                // Save confirmation
+                sessionStorage.setItem('fullscreenConfirmed', 'true');
+                
+                // Enter fullscreen
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
                 }
             });
         }
