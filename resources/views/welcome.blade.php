@@ -49,18 +49,18 @@
         }
     </style>
 </head>
-<body class="antialiased">
-    <div id="landing-screen" class="gradient-bg min-h-screen flex flex-col items-center justify-between cursor-pointer fade-in" onclick="handleTouch()">
+<body class="antialiased overflow-hidden">
+    <div id="landing-screen" class="gradient-bg h-screen w-screen flex flex-col items-center justify-between cursor-pointer fade-in overflow-hidden" onclick="handleTouch()">
         <!-- Top Logos -->
         <div class="w-full flex justify-between items-start p-8">
             <!-- WCC Logo Left -->
             <div class="flex items-center space-x-3">
-                <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC Logo" class="h-12 w-auto">
+                <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC Logo" class="h-20 w-auto">
             </div>
             
             <!-- Aviation Electronics Department Logo Right -->
             <div class="flex items-center">
-                <img src="{{ asset('img/wcc-scans.png') }}" alt="Aviation Electronics Department" class="h-16 w-auto">
+                <img src="{{ asset('img/wcc-scans-airplain-logo.png') }}" alt="Aviation Electronics Department" class="h-20 w-auto">
             </div>
         </div>
 
