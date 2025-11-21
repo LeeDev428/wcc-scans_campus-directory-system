@@ -47,56 +47,9 @@
             border-left: none;
             border-top: none;
         }
-        /* Fullscreen modal */
-        .fullscreen-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            align-items: center;
-            justify-content: center;
-        }
-        .fullscreen-modal.show {
-            display: flex;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 500px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        .modal-button {
-            background-color: #166534;
-            color: white;
-            padding: 12px 40px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .modal-button:hover {
-            background-color: #15803d;
-        }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
-    <!-- Fullscreen Modal -->
-    <div id="fullscreenModal" class="fullscreen-modal">
-        <div class="modal-content">
-            <h2 style="color: #166534; font-size: 24px; margin-bottom: 15px;">Fullscreen Required</h2>
-            <p style="color: #333; font-size: 16px; line-height: 1.6;">This application needs to run in fullscreen mode for the best experience.</p>
-            <button id="fullscreenBtn" class="modal-button">F11</button>
-        </div>
-    </div>
-
     <div id="landing-screen" class="gradient-bg h-screen w-screen flex flex-col items-center justify-between fade-in overflow-hidden">
         <!-- Top Logos -->
         <div class="w-full flex justify-between items-start p-8">
@@ -138,50 +91,14 @@
     </div>
 
     <script>
-        // Check if user has already confirmed fullscreen
-        const fullscreenConfirmed = sessionStorage.getItem('fullscreenConfirmed');
-        
-        if (!fullscreenConfirmed) {
-            // Show modal on page load
-            window.addEventListener('load', function() {
-                document.getElementById('fullscreenModal').classList.add('show');
-            });
-
-            // Handle F11 button click
-            const btn = document.getElementById('fullscreenBtn');
-            btn.addEventListener('click', () => {
-                // Hide modal
-                document.getElementById('fullscreenModal').classList.remove('show');
-                
-                // Save confirmation
-                sessionStorage.setItem('fullscreenConfirmed', 'true');
-                
-                // Enter full-screen
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen().catch((err) => {
-                        console.log(`Error attempting to enable full-screen mode: ${err.message}`);
-                    });
-                } else {
-                    // Exit full-screen
-                    document.exitFullscreen();
-                }
-            });
-        }
-
-        // Handle touch/click to navigate - only when fullscreen is confirmed
+        // Handle touch/click to navigate
         document.getElementById('touchToStart').addEventListener('click', function() {
-            if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
-                // Stay in fullscreen and redirect
-                window.location.href = "{{ route('homepage') }}";
-            }
+            window.location.href = "{{ route('homepage') }}";
         });
 
-        // Also allow clicking anywhere on the landing screen after fullscreen is active
-        document.getElementById('landing-screen').addEventListener('click', function(e) {
-            // Only navigate if not clicking the modal and fullscreen is confirmed
-            if (!e.target.closest('#fullscreenModal') && sessionStorage.getItem('fullscreenConfirmed') === 'true') {
-                window.location.href = "{{ route('homepage') }}";
-            }
+        // Also allow clicking anywhere on the landing screen
+        document.getElementById('landing-screen').addEventListener('click', function() {
+            window.location.href = "{{ route('homepage') }}";
         });
     </script>
 </body>
