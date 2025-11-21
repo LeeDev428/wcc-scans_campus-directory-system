@@ -47,6 +47,44 @@
             border-left: none;
             border-top: none;
         }
+        /* Fullscreen modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .fullscreen-modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .modal-button {
+            background-color: #166534;
+            color: white;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .modal-button:hover {
+            background-color: #15803d;
+        }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
