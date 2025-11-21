@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    <div id="landing-screen" class="gradient-bg h-screen w-screen flex flex-col items-center justify-between cursor-pointer fade-in overflow-hidden" onclick="handleTouch()">
+    <div id="landing-screen" class="gradient-bg h-screen w-screen flex flex-col items-center justify-between fade-in overflow-hidden">
         <!-- Top Logos -->
         <div class="w-full flex justify-between items-start p-8">
             <!-- WCC Logo Left -->
@@ -125,7 +125,7 @@
             <p class="text-white text-xl tracking-[0.3em] mb-16 font-light">SMART CAMPUS ASSISTANT & NAVIGATOR</p>
 
             <!-- Touch to Start -->
-            <div class="pulse-slow">
+            <div class="pulse-slow cursor-pointer" id="touchToStart">
                 <p class="text-white text-lg tracking-wider font-medium">TOUCH ANYWHERE TO START</p>
             </div>
         </div>
