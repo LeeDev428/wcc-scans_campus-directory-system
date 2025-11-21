@@ -93,7 +93,7 @@
         <div class="modal-content">
             <h2 style="color: #166534; font-size: 24px; margin-bottom: 15px;">Fullscreen Required</h2>
             <p style="color: #333; font-size: 16px; line-height: 1.6;">This application needs to run in fullscreen mode for the best experience.</p>
-            <button id="fullscreenBtn" class="modal-button">OK</button>
+            <button id="fullscreenBtn" class="modal-button">F11</button>
         </div>
     </div>
 
@@ -147,7 +147,7 @@
                 document.getElementById('fullscreenModal').classList.add('show');
             });
 
-            // Handle OK button click
+            // Handle F11 button click - exact F11 key behavior
             document.getElementById('fullscreenBtn').addEventListener('click', function() {
                 // Hide modal
                 document.getElementById('fullscreenModal').classList.remove('show');
@@ -155,14 +155,26 @@
                 // Save confirmation
                 sessionStorage.setItem('fullscreenConfirmed', 'true');
                 
-                // Enter fullscreen
+                // Enter fullscreen with exact F11 behavior
                 const elem = document.documentElement;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) {
-                    elem.msRequestFullscreen();
+                
+                if (!document.fullscreenElement && 
+                    !document.webkitFullscreenElement && 
+                    !document.mozFullScreenElement && 
+                    !document.msFullscreenElement) {
+                    
+                    // Request fullscreen with all browser prefixes
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen().catch(err => {
+                            console.log('Fullscreen request failed:', err);
+                        });
+                    } else if (elem.webkitRequestFullscreen) {
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.mozRequestFullScreen) {
+                        elem.mozRequestFullScreen();
+                    } else if (elem.msRequestFullscreen) {
+                        elem.msRequestFullscreen();
+                    }
                 }
             });
         }
