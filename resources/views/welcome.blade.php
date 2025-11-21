@@ -91,7 +91,7 @@
     </div>
 
     <script>
-        // Enter fullscreen mode on load
+        // Enter fullscreen mode
         function enterFullscreen() {
             const elem = document.documentElement;
             if (elem.requestFullscreen) {
@@ -103,14 +103,13 @@
             }
         }
 
-        // Enter fullscreen when page loads
-        window.addEventListener('load', function() {
-            enterFullscreen();
-        });
-
         function handleTouch() {
+            // Enter fullscreen first
+            enterFullscreen();
             // Redirect to homepage
-            window.location.href = "{{ route('homepage') }}";
+            setTimeout(() => {
+                window.location.href = "{{ route('homepage') }}";
+            }, 100);
         }
     </script>
 </body>
