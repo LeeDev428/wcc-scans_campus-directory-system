@@ -81,18 +81,22 @@
     </div>
 </body>
 <script>
-    // Enter fullscreen if user confirmed
-    if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
-        const elem = document.documentElement;
-        if (!document.fullscreenElement) {
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
+    // Automatically re-enter fullscreen on page load
+    window.addEventListener('load', function() {
+        if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
+            setTimeout(function() {
+                const elem = document.documentElement;
+                if (!document.fullscreenElement) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen().catch(err => {});
+                    } else if (elem.webkitRequestFullscreen) {
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) {
+                        elem.msRequestFullscreen();
+                    }
+                }
+            }, 100);
         }
-    }
+    });
 </script>
 </html>
