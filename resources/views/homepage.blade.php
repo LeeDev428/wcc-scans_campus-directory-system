@@ -48,13 +48,11 @@
 <body class="antialiased">
     <div class="gradient-bg min-h-screen flex flex-col">
         <!-- Header -->
-        <div class="flex items-center justify-between p-6">
+        <div class="flex items-center justify-between p-4">
             <!-- QR Code & Avionics Society -->
             <div class="flex items-center space-x-3">
                 <div class="bg-white p-2 rounded">
-                    <div class="w-20 h-20 bg-gray-800 flex items-center justify-center text-white text-xs">
-                        QR CODE
-                    </div>
+                    <img src="{{ asset('img/wcc-scans-logo.png') }}" alt="QR Code" class="w-16 h-16">
                 </div>
                 <div class="text-white text-xs font-semibold">
                     AVIONICS SOCIETY PB
@@ -64,28 +62,33 @@
             <!-- WCC SCAN Logo -->
             <div class="flex items-center space-x-3">
                 <div class="border-2 border-white p-2 rounded">
-                    <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC" class="h-12 w-auto">
+                    <img src="{{ asset('img/wcc-scans.png') }}" alt="WCC" class="h-16 w-auto">
                 </div>
                 <div class="text-white">
-                    <h1 class="text-4xl font-bold tracking-wider">SCAN</h1>
-                    <p class="text-[8px] tracking-[0.2em] mt-1">SMART CAMPUS ASSISTANT & NAVIGATOR</p>
+                    <h1 class="text-5xl font-bold tracking-wider">SCAN</h1>
+                    <p class="text-[9px] tracking-[0.2em] mt-1">SMART CAMPUS ASSISTANT & NAVIGATOR</p>
                 </div>
+            </div>
+
+            <!-- Airplane Logo -->
+            <div>
+                <img src="{{ asset('img/wcc-scans-airplain-logo.png') }}" alt="Aviation Logo" class="h-16 w-auto">
             </div>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 px-8 py-4 space-y-4">
+        <div class="flex-1 px-8 py-2 space-y-3">
             <!-- Important Reminder Box -->
-            <div class="info-box bg-transparent p-4 rounded">
-                <h2 class="text-white text-xl font-bold tracking-wider mb-3">IMPORTANT REMINDER</h2>
+            <div class="info-box bg-transparent p-3 rounded">
+                <h2 class="text-white text-lg font-bold tracking-wider mb-2">IMPORTANT REMINDER</h2>
                 <p class="text-white text-sm font-semibold mb-1">PRELIM EXAMINATIONS ON SEPTEMBER 15-20, 2025</p>
                 <p class="text-white text-sm">No permit, No exam.</p>
             </div>
 
             <!-- Events Box -->
-            <div class="info-box bg-transparent p-4 rounded">
-                <h2 class="text-white text-xl font-bold tracking-wider mb-3">EVENTS</h2>
-                <div class="text-white text-sm space-y-2">
+            <div class="info-box bg-transparent p-3 rounded">
+                <h2 class="text-white text-lg font-bold tracking-wider mb-2">EVENTS</h2>
+                <div class="text-white text-sm space-y-1">
                     <p class="font-semibold">AVIOWEEK 2025:</p>
                     <p>AVFEST: OCTOBER 22-23, 2025 - WCC ATC CAMPUS</p>
                     <p>AVNIGHT: OCTOBER 24, 2025</p>
@@ -93,51 +96,52 @@
             </div>
 
             <!-- Announcement Box -->
-            <div class="info-box bg-transparent p-4 rounded">
-                <h2 class="text-white text-xl font-bold tracking-wider mb-3">ANNOUNCEMENT</h2>
+            <div class="info-box bg-transparent p-3 rounded">
+                <h2 class="text-white text-lg font-bold tracking-wider mb-2">ANNOUNCEMENT</h2>
                 <p class="text-white text-sm font-semibold">HAPPY TEACHER'S DAY!!</p>
             </div>
         </div>
 
         <!-- Menu Buttons -->
-        <div class="px-8 pb-8">
-            <div class="grid grid-cols-3 gap-6">
+        <div class="px-8 pb-3">
+            <div class="grid grid-cols-3 gap-4">
                 <!-- Campus Directory Button -->
-                <a href="{{ route('campus.directory') }}" class="menu-button bg-transparent p-6 rounded flex flex-col items-center justify-center hover:shadow-lg">
-                    <div class="mb-3">
-                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('campus.directory') }}" class="menu-button bg-transparent p-4 rounded flex flex-col items-center justify-center hover:shadow-lg">
+                    <div class="mb-2">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <p class="text-white text-sm font-bold tracking-wider text-center">CAMPUS<br>DIRECTORY</p>
+                    <p class="text-white text-xs font-bold tracking-wider text-center">CAMPUS<br>DIRECTORY</p>
                 </a>
 
                 <!-- Campus Policies Button -->
-                <a href="{{ route('campus.policies') }}" class="menu-button bg-transparent p-6 rounded flex flex-col items-center justify-center hover:shadow-lg">
-                    <div class="mb-3">
-                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('campus.policies') }}" class="menu-button bg-transparent p-4 rounded flex flex-col items-center justify-center hover:shadow-lg">
+                    <div class="mb-2">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                     </div>
-                    <p class="text-white text-sm font-bold tracking-wider text-center">CAMPUS<br>POLICIES</p>
+                    <p class="text-white text-xs font-bold tracking-wider text-center">CAMPUS<br>POLICIES</p>
                 </a>
 
                 <!-- Submit Tickets Button -->
-                <a href="{{ route('submit.ticket') }}" class="menu-button bg-transparent p-6 rounded flex flex-col items-center justify-center hover:shadow-lg">
-                    <div class="mb-3">
-                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('submit.ticket') }}" class="menu-button bg-transparent p-4 rounded flex flex-col items-center justify-center hover:shadow-lg">
+                    <div class="mb-2">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
                         </svg>
                     </div>
-                    <p class="text-white text-sm font-bold tracking-wider text-center">SUBMIT<br>TICKETS</p>
+                    <p class="text-white text-xs font-bold tracking-wider text-center">SUBMIT<br>TICKETS</p>
                 </a>
             </div>
         </div>
 
-        <!-- Back to Homepage -->
-        <div class="text-center pb-6">
-            <a href="{{ route('welcome') }}" class="text-white text-sm font-semibold tracking-wider hover:underline">BACK TO HOMEPAGE</a>
+        <!-- Footer Links -->
+        <div class="flex items-center justify-between px-8 pb-3">
+            <a href="{{ route('welcome') }}" class="text-white text-xs font-semibold tracking-wider hover:underline">BACK TO HOMEPAGE</a>
+            <a href="{{ route('login') }}" class="bg-white text-green-800 font-bold px-6 py-2 rounded-lg hover:bg-gray-100 transition text-sm">LOGIN</a>
         </div>
     </div>
 </body>
