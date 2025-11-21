@@ -91,6 +91,23 @@
     </div>
 
     <script>
+        // Enter fullscreen mode on load
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // Enter fullscreen when page loads
+        window.addEventListener('load', function() {
+            enterFullscreen();
+        });
+
         function handleTouch() {
             // Redirect to homepage
             window.location.href = "{{ route('homepage') }}";
