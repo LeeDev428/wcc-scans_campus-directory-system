@@ -91,25 +91,32 @@
     </div>
 
     <script>
-        // Enter fullscreen mode
-        function enterFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { /* Safari */
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { /* IE11 */
-                elem.msRequestFullscreen();
-            }
+        // Check if user has already confirmed fullscreen
+        const fullscreenConfirmed = sessionStorage.getItem('fullscreenConfirmed');
+        
+        if (!fullscreenConfirmed) {
+            // Show popup on page load
+            window.addEventListener('load', function() {
+                const userConfirmed = confirm('This application needs to run in fullscreen mode for the best experience. Click OK to continue.');
+                
+                if (userConfirmed) {
+                    sessionStorage.setItem('fullscreenConfirmed', 'true');
+                    // Enter fullscreen
+                    const elem = document.documentElement;
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.webkitRequestFullscreen) {
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) {
+                        elem.msRequestFullscreen();
+                    }
+                }
+            });
         }
 
         function handleTouch() {
-            // Enter fullscreen first
-            enterFullscreen();
             // Redirect to homepage
-            setTimeout(() => {
-                window.location.href = "{{ route('homepage') }}";
-            }, 100);
+            window.location.href = "{{ route('homepage') }}";
         }
     </script>
 </body>
