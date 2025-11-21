@@ -51,7 +51,7 @@
         <div class="flex items-center justify-between p-4">
             <!-- QR Code & Avionics Society -->
             <div class="flex items-center space-x-3">
-                <div class="bg-white p-2 rounded">
+                <div class="p-2 rounded">
                     <img src="{{ asset('img/wcc-scans-logo.png') }}" alt="QR Code" class="w-16 h-16">
                 </div>
                 <div class="text-white text-xs font-semibold">
