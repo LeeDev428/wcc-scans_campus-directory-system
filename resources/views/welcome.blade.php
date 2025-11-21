@@ -78,8 +78,15 @@
             <p class="text-white text-xl tracking-[0.3em] mb-16 font-light">SMART CAMPUS ASSISTANT & NAVIGATOR</p>
 
             <!-- Touch to Start -->
-            <div class="pulse-slow">
+            <div class="pulse-slow mb-8">
                 <p class="text-white text-lg tracking-wider font-medium">TOUCH ANYWHERE TO START</p>
+            </div>
+
+            <!-- Login Button -->
+            <div class="mt-4">
+                <a href="{{ route('login') }}" onclick="event.stopPropagation();" class="inline-block bg-white text-green-800 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition shadow-lg">
+                    LOGIN
+                </a>
             </div>
         </div>
 
@@ -92,8 +99,8 @@
 
     <script>
         function handleTouch() {
-            // Redirect to login page
-            window.location.href = "{{ route('login') }}";
+            // Redirect to homepage
+            window.location.href = "{{ route('homepage') }}";
         }
     </script>
 </body>
