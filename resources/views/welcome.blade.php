@@ -88,6 +88,15 @@
     </style>
 </head>
 <body class="antialiased overflow-hidden">
+    <!-- Fullscreen Modal -->
+    <div id="fullscreenModal" class="fullscreen-modal">
+        <div class="modal-content">
+            <h2 style="color: #166534; font-size: 24px; margin-bottom: 15px;">Fullscreen Required</h2>
+            <p style="color: #333; font-size: 16px; line-height: 1.6;">This application needs to run in fullscreen mode for the best experience.</p>
+            <button id="fullscreenBtn" class="modal-button">OK</button>
+        </div>
+    </div>
+
     <div id="landing-screen" class="gradient-bg h-screen w-screen flex flex-col items-center justify-between cursor-pointer fade-in overflow-hidden" onclick="handleTouch()">
         <!-- Top Logos -->
         <div class="w-full flex justify-between items-start p-8">
