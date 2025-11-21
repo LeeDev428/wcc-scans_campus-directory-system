@@ -143,23 +143,18 @@
     </div>
 </body>
 <script>
-    // Enter fullscreen mode
-    function enterFullscreen() {
+    // Enter fullscreen if user confirmed
+    if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
         const elem = document.documentElement;
         if (!document.fullscreenElement) {
             if (elem.requestFullscreen) {
                 elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { /* Safari */
+            } else if (elem.webkitRequestFullscreen) {
                 elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { /* IE11 */
+            } else if (elem.msRequestFullscreen) {
                 elem.msRequestFullscreen();
             }
         }
     }
-
-    // Enter fullscreen on any click
-    document.addEventListener('click', function() {
-        enterFullscreen();
-    }, { once: true });
 </script>
 </html>
