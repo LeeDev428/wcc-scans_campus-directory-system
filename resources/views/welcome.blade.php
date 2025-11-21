@@ -167,10 +167,21 @@
             });
         }
 
-        function handleTouch() {
-            // Redirect to homepage
-            window.location.href = "{{ route('homepage') }}";
-        }
+        // Handle touch/click to navigate - only when fullscreen is confirmed
+        document.getElementById('touchToStart').addEventListener('click', function() {
+            if (sessionStorage.getItem('fullscreenConfirmed') === 'true') {
+                // Stay in fullscreen and redirect
+                window.location.href = "{{ route('homepage') }}";
+            }
+        });
+
+        // Also allow clicking anywhere on the landing screen after fullscreen is active
+        document.getElementById('landing-screen').addEventListener('click', function(e) {
+            // Only navigate if not clicking the modal and fullscreen is confirmed
+            if (!e.target.closest('#fullscreenModal') && sessionStorage.getItem('fullscreenConfirmed') === 'true') {
+                window.location.href = "{{ route('homepage') }}";
+            }
+        });
     </script>
 </body>
 </html>
