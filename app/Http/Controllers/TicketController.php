@@ -15,7 +15,6 @@ class TicketController extends Controller
     {
         $request->validate([
             'ticket_message' => 'required|string|max:1000',
-            'rating' => 'required|integer|min:1|max:6',
         ]);
 
         // Create ticket
@@ -24,12 +23,33 @@ class TicketController extends Controller
             'status' => 'pending',
         ]);
 
+        // Redirect to rating page
+        return redirect()->route('rate.experience');
+    }
+
+    /**
+     * Show rating page
+     */
+    public function showRating()
+    {
+        return view('rate-experience');
+    }
+
+    /**
+     * Store rating
+     */
+    public function storeRating(Request $request)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:6',
+        ]);
+
         // Create rating
         Rating::create([
             'rating' => $request->rating,
         ]);
 
-        return redirect()->route('submit.ticket')->with('success', 'Thank you for your feedback!');
+        return redirect()->route('homepage')->with('success', 'Thank you for your feedback!');
     }
 
     /**
