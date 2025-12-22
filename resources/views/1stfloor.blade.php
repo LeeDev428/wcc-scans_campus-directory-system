@@ -12,15 +12,15 @@
 
     <!-- Main Content -->
     <div class="min-h-screen flex items-center justify-center p-8">
-        <div class="w-full max-w-7xl">
+        <div class="w-full max-w-6xl">
             <!-- Header -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold text-gray-800 mb-2">1st Floor</h1>
-                <p class="text-gray-600">WCC SCAN Campus Directory</p>
+            <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">1st Floor</h1>
+            <p class="text-gray-600">WCC SCAN Campus Directory</p>
             </div>
 
             <!-- SVG Container -->
-         <svg width="1440" height="882" viewBox="0 0 1440 882" fill="none" xmlns="http://www.w3.org/2000/svg">
+         <svg width="1440" height="882" viewBox="0 0 1440 882" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
 <rect width="1440" height="882" fill="#F5F5F5"/>
 <rect width="1440" height="882" fill="white"/>
 <rect x="332" y="446" width="627" height="4" rx="2" fill="#1D192B"/>
