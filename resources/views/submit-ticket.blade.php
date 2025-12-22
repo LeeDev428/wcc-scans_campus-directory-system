@@ -30,22 +30,22 @@
         </div>
 
         <!-- Title -->
-        <div class="px-8 py-6">
-            <h1 class="text-white text-5xl font-bold tracking-wider">SUBMIT TICKET</h1>
+        <div class="px-8 py-3">
+            <h1 class="text-white text-4xl font-bold tracking-wider">SUBMIT TICKET</h1>
         </div>
 
         <!-- Form Area -->
-        <div class="flex-1 px-8 py-6 flex items-center justify-center">
+        <div class="flex-1 px-8 py-4 flex items-center justify-center">
             <div class="max-w-3xl w-full">
-                <form method="POST" action="{{ route('ticket.store') }}" class="space-y-6">
+                <form method="POST" action="{{ route('ticket.store') }}" class="space-y-4">
                     @csrf
                     
                     <!-- Text Input Field -->
-                    <div class="border-2 border-white p-6 rounded-lg">
+                    <div class="border-2 border-white p-4 rounded-lg">
                         <textarea 
                             name="ticket_message" 
-                            rows="8"
-                            class="w-full px-6 py-4 rounded-lg text-gray-700 text-lg focus:outline-none focus:ring-2 focus:ring-white"
+                            rows="6"
+                            class="w-full px-4 py-3 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter your feedback or concern..."
                             required
                         ></textarea>
@@ -58,7 +58,7 @@
                     <div class="flex justify-center">
                         <button 
                             type="submit" 
-                            class="bg-white text-green-800 font-bold px-16 py-4 rounded-lg hover:bg-gray-100 transition text-xl"
+                            class="bg-white text-green-800 font-bold px-12 py-3 rounded-lg hover:bg-gray-100 transition text-lg"
                         >
                             SUBMIT
                         </button>
@@ -66,8 +66,8 @@
                 </form>
 
                 <!-- Description Text -->
-                <div class="mt-8 text-center">
-                    <p class="text-white text-sm leading-relaxed">
+                <div class="mt-6 text-center">
+                    <p class="text-white text-xs leading-relaxed">
                         WE ARE COMMITTED TO IMPROVING YOUR LEARNING ENVIRONMENT.<br>
                         THIS IS A CONFIDENTIAL CHANNEL FOR YOU TO PROVIDE FEEDBACK<br>
                         ON YOUR CLASSROOM SITUATION, INSTRUCTORS, AND MORE. YOUR<br>
@@ -78,7 +78,7 @@
         </div>
 
         <!-- Back to Homepage -->
-        <div class="text-center pb-8">
+        <div class="text-center pb-6">
             <a href="{{ route('homepage') }}" class="text-white text-sm font-semibold tracking-wider hover:underline">BACK TO HOMEPAGE</a>
         </div>
     </div>
