@@ -35,6 +35,17 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <!-- Admin Links -->
+                        @if(Auth::user()->role === 'admin')
+                            <x-dropdown-link :href="route('admin.dashboard')">
+                                {{ __('Admin Dashboard') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('admin.tickets.index')">
+                                {{ __('Manage Tickets') }}
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-200"></div>
+                        @endif
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -81,6 +92,17 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <!-- Admin Links (Mobile) -->
+                @if(Auth::user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('admin.dashboard')">
+                        {{ __('Admin Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.tickets.index')">
+                        {{ __('Manage Tickets') }}
+                    </x-responsive-nav-link>
+                    <div class="border-t border-green-600 my-2"></div>
+                @endif
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
