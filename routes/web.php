@@ -31,6 +31,26 @@ Route::get('/rate-experience', [TicketController::class, 'showRating'])->name('r
 
 Route::post('/rate-experience', [TicketController::class, 'storeRating'])->name('rating.store');
 
+// Floor Routes
+Route::get('/floor/{floor}', function ($floor) {
+    $floorMap = [
+        1 => '1stfloor',
+        2 => '2ndfloor',
+        3 => '3rdfloor',
+        4 => '4thfloor',
+        5 => '5thfloor',
+        6 => '6thfloor',
+        7 => '7thfloor',
+        8 => '8thfloor',
+    ];
+    
+    if (array_key_exists($floor, $floorMap)) {
+        return view($floorMap[$floor]);
+    }
+    
+    abort(404);
+})->where('floor', '[1-8]')->name('floor.show');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
