@@ -27,6 +27,10 @@ Route::get('/submit-ticket', function () {
 
 Route::post('/submit-ticket', [TicketController::class, 'store'])->name('ticket.store');
 
+Route::get('/rate-experience', [TicketController::class, 'showRating'])->name('rate.experience');
+
+Route::post('/rate-experience', [TicketController::class, 'storeRating'])->name('rating.store');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
