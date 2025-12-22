@@ -11,19 +11,6 @@
         .gradient-bg {
             background: linear-gradient(180deg, #0d4d3d 0%, #1a8b6f 100%);
         }
-        .emoji-rating {
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            opacity: 0.5;
-        }
-        .emoji-rating:hover {
-            transform: scale(1.1);
-            opacity: 1;
-        }
-        .emoji-rating.selected {
-            opacity: 1;
-            transform: scale(1.2);
-        }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
