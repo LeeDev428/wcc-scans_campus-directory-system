@@ -5,22 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1st Floor - WCC SCAN Campus Directory</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .floor-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 1rem 1rem 7rem;
+            box-sizing: border-box;
+        }
+        .svg-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .svg-wrapper svg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="1" />
 
     <!-- Main Content -->
-    <div class="min-h-screen flex items-center justify-center p-8">
-        <div class="w-full max-w-6xl">
-            <!-- Header -->
-            <div class="text-center mb-6">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">1st Floor</h1>
-            <p class="text-gray-600">WCC SCAN Campus Directory</p>
-            </div>
+    <div class="floor-container">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">1st Floor</h1>
+            <p class="text-sm text-gray-600">WCC SCAN Campus Directory</p>
+        </div>
 
-            <!-- SVG Container -->
-<svg width="1440" height="882" viewBox="0 0 1440 882" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- SVG Container -->
+        <div class="svg-wrapper">
+            <svg viewBox="0 0 1440 882" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="1440" height="882" fill="#F5F5F5"/>
 <rect width="1440" height="882" fill="white"/>
 <rect x="128" y="431" width="978" height="4" rx="2" fill="#1D192B"/>
