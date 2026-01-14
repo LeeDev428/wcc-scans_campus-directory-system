@@ -27,8 +27,8 @@
             overflow: hidden;
         }
         .svg-wrapper svg {
-            max-width: 90%;
-            max-height: 85%;
+            max-width: 100%;
+            max-height: 95%;
             width: auto;
             height: auto;
         }
