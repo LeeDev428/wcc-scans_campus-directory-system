@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1st Floor - WCC SCAN Campus Directory</title>
+    <title>2nd Floor - WCC SCAN Campus Directory</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body {
@@ -36,13 +36,13 @@
 </head>
 <body class="bg-gray-50">
     <!-- Floor Navigator Component -->
-    <x-floor-navigator :currentFloor="1" />
+    <x-floor-navigator :currentFloor="2" />
 
     <!-- Main Content -->
     <div class="floor-container">
         <!-- Header -->
         <div class="text-center mb-4">
-            <h1 class="text-2xl font-bold text-gray-800 mb-1">1st Floor</h1>
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">2nd Floor</h1>
             <p class="text-sm text-gray-600">WCC SCAN Campus Directory</p>
         </div>
 
