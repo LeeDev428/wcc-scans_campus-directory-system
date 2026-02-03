@@ -38,6 +38,9 @@
                             <a href="{{ route('admin.tickets.index') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.tickets.*') ? 'bg-green-700' : '' }}">
                                 Tickets
                             </a>
+                            <a href="{{ route('admin.events.index') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.events.*') ? 'bg-green-700' : '' }}">
+                                Events
+                            </a>
                         </div>
                     </div>
 
@@ -95,6 +98,9 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.*')">
                         {{ __('Tickets') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
+                        {{ __('Events') }}
                     </x-responsive-nav-link>
                 </div>
 
