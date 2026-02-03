@@ -71,5 +71,25 @@
             <a href="{{ route('homepage') }}" class="text-white text-sm font-semibold tracking-wider hover:underline">BACK TO HOMEPAGE</a>
         </div>
     </div>
+    
+    <script>
+        // Auto-redirect to homepage after 12 seconds of inactivity
+        let inactivityTimer;
+        
+        function resetTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                window.location.href = '{{ route('welcome') }}';
+            }, 12000); // 12 seconds
+        }
+        
+        // Reset timer on any user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+            document.addEventListener(event, resetTimer, true);
+        });
+        
+        // Start the timer on page load
+        resetTimer();
+    </script>
 </body>
 </html>
