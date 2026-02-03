@@ -11,10 +11,17 @@
         .gradient-bg {
             background: linear-gradient(180deg, #0d4d3d 0%, #1a8b6f 100%);
         }
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
-    <div class="gradient-bg h-screen w-screen flex flex-col overflow-hidden">
+    <div class="gradient-bg h-screen w-screen flex flex-col overflow-hidden fade-in">
         <!-- Header -->
         <div class="flex items-center justify-end p-6">
             <!-- WCC SCAN Logo -->
@@ -82,5 +89,25 @@
             <a href="{{ route('homepage') }}" class="text-white text-sm font-semibold tracking-wider hover:underline">BACK TO HOMEPAGE</a>
         </div>
     </div>
+    
+    <script>
+        // Auto-redirect to homepage after 12 seconds of inactivity
+        let inactivityTimer;
+        
+        function resetTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                window.location.href = '{{ route('welcome') }}';
+            }, 12000); // 12 seconds
+        }
+        
+        // Reset timer on any user activity
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+            document.addEventListener(event, resetTimer, true);
+        });
+        
+        // Start the timer on page load
+        resetTimer();
+    </script>
 </body>
 </html>
