@@ -85,10 +85,30 @@
             <!-- Events Box -->
             <div class="info-box bg-transparent p-3 rounded">
                 <h2 class="text-white text-lg font-bold tracking-wider mb-2">EVENTS</h2>
-                <div class="text-white text-sm space-y-1">
-                    <p class="font-semibold">AVIOWEEK 2025:</p>
-                    <p>AVFEST: OCTOBER 22-23, 2025 - WCC ATC CAMPUS</p>
-                    <p>AVNIGHT: OCTOBER 24, 2025</p>
+                <div class="space-y-3">
+                    @forelse($events as $event)
+                        <div class="border-t border-white/30 pt-2 first:border-t-0 first:pt-0">
+                            @if($event->image)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $event->image) }}" 
+                                         alt="{{ $event->title }}" 
+                                         class="w-full h-32 object-cover rounded">
+                                </div>
+                            @endif
+                            <div class="text-white text-sm space-y-1">
+                                <p class="font-semibold">{{ $event->title }}</p>
+                                @if($event->description)
+                                    <p class="text-xs">{{ $event->description }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-white text-sm space-y-1">
+                            <p class="font-semibold">AVIOWEEK 2025:</p>
+                            <p>AVFEST: OCTOBER 22-23, 2025 - WCC ATC CAMPUS</p>
+                            <p>AVNIGHT: OCTOBER 24, 2025</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 
