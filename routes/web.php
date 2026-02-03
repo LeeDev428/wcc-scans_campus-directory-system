@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,7 +11,8 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/homepage', function () {
-    return view('homepage');
+    $events = Event::where('is_active', true)->latest()->get();
+    return view('homepage', compact('events'));
 })->name('homepage');
 
 Route::get('/campus-directory', function () {
