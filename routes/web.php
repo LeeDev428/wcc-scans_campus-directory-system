@@ -67,6 +67,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/tickets', [TicketController::class, 'adminIndex'])->name('tickets.index');
     Route::patch('/tickets/{ticket}/status', [TicketController::class, 'updateStatus'])->name('tickets.update-status');
     Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+    
+    // Event management routes
+    Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
 });
 
 require __DIR__.'/auth.php';
