@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .gradient-bg {
-            background: linear-gradient(180deg, #0d4d3d 0%, #1a8b6f 100%);
+            background: #164D30;
         }
         .fade-in {
             animation: fadeIn 0.8s ease-in;
