@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .gradient-bg {
-            background: linear-gradient(180deg, #0d4d3d 0%, #1a8b6f 100%);
+            background: #164D30;
         }
         .fade-in {
             animation: fadeIn 0.8s ease-in;
@@ -72,7 +72,7 @@
 
         <!-- Content Area -->
         <div class="flex-1 px-8 py-4 overflow-y-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1600px] mx-auto">
                 @forelse($events as $event)
                     <div class="event-card bg-transparent p-6 rounded-lg">
                         @if($event->image)
