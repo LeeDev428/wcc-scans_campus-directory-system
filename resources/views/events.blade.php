@@ -66,32 +66,32 @@
         </div>
 
         <!-- Title -->
-        <div class="px-8 py-4">
+        <div class="px-12 py-4">
             <h1 class="text-white text-4xl font-bold tracking-wider">EVENTS</h1>
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 px-4 py-4 overflow-y-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[92%] mx-auto">
+        <div class="flex-1 px-12 py-4 overflow-y-auto">
+            <div class="space-y-8">
                 @forelse($events as $event)
-                    <div class="event-card bg-transparent p-6 rounded-lg">
+                    <div class="event-card bg-transparent p-8 rounded-lg flex gap-8">
                         @if($event->image)
-                            <div class="mb-4">
+                            <div class="flex-shrink-0 w-2/5">
                                 <img src="{{ asset('storage/' . $event->image) }}" 
                                      alt="{{ $event->title }}" 
-                                     class="w-full h-64 object-cover rounded-lg shadow-lg">
+                                     class="w-full h-80 object-cover rounded-lg shadow-lg">
                             </div>
                         @endif
-                        <div class="text-white space-y-3">
-                            <h2 class="text-2xl font-bold">{{ $event->title }}</h2>
+                        <div class="text-white space-y-4 flex-1">
+                            <h2 class="text-3xl font-bold">{{ $event->title }}</h2>
                             @if($event->description)
-                                <p class="text-base leading-relaxed">{{ $event->description }}</p>
+                                <p class="text-lg leading-relaxed">{{ $event->description }}</p>
                             @endif
-                            <p class="text-sm text-white/70">Posted: {{ $event->created_at->format('F d, Y') }}</p>
+                            <p class="text-base text-white/70">Posted: {{ $event->created_at->format('F d, Y') }}</p>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-2 text-white text-center py-16">
+                    <div class="text-white text-center py-16">
                         <svg class="w-24 h-24 mx-auto mb-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                         </svg>
