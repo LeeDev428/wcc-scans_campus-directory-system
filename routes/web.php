@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Event;
+use App\Models\Announcement;
+use App\Models\ImportantReminder;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,9 +13,15 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/homepage', function () {
-    $events = Event::where('is_active', true)->latest()->get();
-    return view('homepage', compact('events'));
+    $announcements = Announcement::where('is_active', true)->latest()->get();
+    $importantReminders = ImportantReminder::where('is_active', true)->latest()->get();
+    return view('homepage', compact('announcements', 'importantReminders'));
 })->name('homepage');
+
+Route::get('/events', function () {
+    $events = Event::where('is_active', true)->latest()->get();
+    return view('events', compact('events'));
+})->name('events');
 
 Route::get('/campus-directory', function () {
     return view('campus-directory');
@@ -72,6 +80,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Event management routes
     Route::resource('events', \App\Http\Controllers\Admin\EventController::class);
+    
+    // Announcement management routes
+    Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class);
+    
+    // Important Reminders management routes
+    Route::resource('important-reminders', \App\Http\Controllers\Admin\ImportantReminderController::class);
 });
 
 require __DIR__.'/auth.php';
