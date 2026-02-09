@@ -81,31 +81,44 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 px-8 py-4 overflow-y-auto">
-            <!-- Events Box - Expanded -->
+        <div class="flex-1 px-8 py-4 overflow-y-auto space-y-4">
+            <!-- Important Reminders Box -->
             <div class="info-box bg-transparent p-4 rounded">
-                <h2 class="text-white text-2xl font-bold tracking-wider mb-4">EVENTS</h2>
-                <div class="space-y-4">
-                    @forelse($events as $event)
-                        <div class="border-t border-white/30 pt-3 first:border-t-0 first:pt-0">
-                            @if($event->image)
-                                <div class="mb-3">
-                                    <img src="{{ asset('storage/' . $event->image) }}" 
-                                         alt="{{ $event->title }}" 
-                                         class="w-full h-48 object-cover rounded shadow-lg">
-                                </div>
-                            @endif
-                            <div class="text-white space-y-2">
-                                <p class="text-lg font-semibold">{{ $event->title }}</p>
-                                @if($event->description)
-                                    <p class="text-sm">{{ $event->description }}</p>
+                <h2 class="text-white text-xl font-bold tracking-wider mb-3">IMPORTANT REMINDERS</h2>
+                <div class="space-y-3">
+                    @forelse($importantReminders as $reminder)
+                        <div class="border-t border-white/30 pt-2 first:border-t-0 first:pt-0">
+                            <div class="text-white space-y-1">
+                                <p class="font-semibold">{{ $reminder->title }}</p>
+                                @if($reminder->description)
+                                    <p class="text-sm">{{ $reminder->description }}</p>
                                 @endif
                             </div>
                         </div>
                     @empty
-                        <div class="text-white text-center py-8">
-                            <p class="text-lg font-semibold mb-2">No events at this time</p>
-                            <p class="text-sm">Check back later for upcoming events!</p>
+                        <div class="text-white text-center py-4">
+                            <p class="text-sm">No important reminders at this time</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
+            <!-- Announcements Box -->
+            <div class="info-box bg-transparent p-4 rounded">
+                <h2 class="text-white text-xl font-bold tracking-wider mb-3">ANNOUNCEMENTS</h2>
+                <div class="space-y-3">
+                    @forelse($announcements as $announcement)
+                        <div class="border-t border-white/30 pt-2 first:border-t-0 first:pt-0">
+                            <div class="text-white space-y-1">
+                                <p class="font-semibold">{{ $announcement->title }}</p>
+                                @if($announcement->description)
+                                    <p class="text-sm">{{ $announcement->description }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="text-white text-center py-4">
+                            <p class="text-sm">No announcements at this time</p>
                         </div>
                     @endforelse
                 </div>
@@ -114,7 +127,7 @@
 
         <!-- Menu Buttons -->
         <div class="px-8 py-4">
-            <div class="grid grid-cols-3 gap-6">
+            <div class="grid grid-cols-4 gap-4">
                 <!-- Campus Directory Button -->
                 <a href="{{ route('campus.directory') }}" class="menu-button bg-transparent p-6 rounded flex flex-col items-center justify-center hover:shadow-lg min-h-[140px]">
                     <div class="mb-3">
@@ -144,6 +157,16 @@
                         </svg>
                     </div>
                     <p class="text-white text-sm font-bold tracking-wider text-center leading-tight">SUBMIT<br>TICKETS</p>
+                </a>
+
+                <!-- Events Button -->
+                <a href="{{ route('events') }}" class="menu-button bg-transparent p-6 rounded flex flex-col items-center justify-center hover:shadow-lg min-h-[140px]">
+                    <div class="mb-3">
+                        <svg class="w-14 h-14 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-white text-sm font-bold tracking-wider text-center leading-tight">EVENTS</p>
                 </a>
             </div>
         </div>
