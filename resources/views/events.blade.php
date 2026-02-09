@@ -71,8 +71,8 @@
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 px-8 py-4 overflow-y-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1600px] mx-auto">
+        <div class="flex-1 px-4 py-4 overflow-y-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[92%] mx-auto">
                 @forelse($events as $event)
                     <div class="event-card bg-transparent p-6 rounded-lg">
                         @if($event->image)
