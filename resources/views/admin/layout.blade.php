@@ -108,6 +108,12 @@
                     <x-responsive-nav-link :href="route('admin.events.index')" :active="request()->routeIs('admin.events.*')">
                         {{ __('Events') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.announcements.index')" :active="request()->routeIs('admin.announcements.*')">
+                        {{ __('Announcements') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.important-reminders.index')" :active="request()->routeIs('admin.important-reminders.*')">
+                        {{ __('Reminders') }}
+                    </x-responsive-nav-link>
                 </div>
 
                 <!-- Responsive Settings Options -->
