@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body style="background-color: #164D30;">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="7" />
 
