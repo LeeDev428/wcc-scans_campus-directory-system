@@ -41,6 +41,12 @@
                             <a href="{{ route('admin.events.index') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.events.*') ? 'bg-green-700' : '' }}">
                                 Events
                             </a>
+                            <a href="{{ route('admin.announcements.index') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.announcements.*') ? 'bg-green-700' : '' }}">
+                                Announcements
+                            </a>
+                            <a href="{{ route('admin.important-reminders.index') }}" class="text-white hover:text-gray-200 px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('admin.important-reminders.*') ? 'bg-green-700' : '' }}">
+                                Reminders
+                            </a>
                         </div>
                     </div>
 
