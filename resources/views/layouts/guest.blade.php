@@ -16,7 +16,7 @@
         
         <style>
             .gradient-bg {
-                background: #164D30;
+                background: linear-gradient(90deg, #164D30 0%, #185336 60%, #369976 100%);
             }
         </style>
     </head>
