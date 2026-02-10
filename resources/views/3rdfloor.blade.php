@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body style="background-color: #164D30;">
+<body style="background: linear-gradient(90deg, #164D30 0%, #185336 60%, #369976 100%);">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="3" />
 
