@@ -3141,8 +3141,5 @@
             </a>
         </div>
     </div>
-
-    <!-- Interactive Floor Component -->
-    <x-floor-interactive :floor="6" />
 </body>
 </html>
