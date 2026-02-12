@@ -2,128 +2,183 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const svg = document.querySelector('.svg-wrapper svg');
+    if (!svg) return;
+    
+    // State: null = no selection, object = from location selected
+    let fromLocation = null;
+    
     // Check if there's a room parameter in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('room');
     
     if (roomId) {
-        // Fetch room details and navigate to it
         fetchRoomAndNavigate(roomId);
     }
     
-    // Add click handlers to all room shapes
-    addClickHandlersToRooms();
+    // Add click handlers to SVG
+    svg.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Get click position relative to SVG
+        const pt = svg.createSVGPoint();
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+        const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+        
+        const clickX = svgP.x;
+        const clickY = svgP.y;
+        
+        // Find closest room to click position
+        fetch(`/api/rooms/floor/{{ $floor }}`)
+            .then(response => response.json())
+            .then(rooms => {
+                let closestRoom = null;
+                let minDistance = Infinity;
+                
+                rooms.forEach(room => {
+                    const dist = Math.sqrt(
+                        Math.pow(room.center_x - clickX, 2) + 
+                        Math.pow(room.center_y - clickY, 2)
+                    );
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestRoom = room;
+                    }
+                });
+                
+                if (closestRoom && minDistance < 150) {
+                    handleRoomClick(closestRoom);
+                }
+            });
+    });
 
-    /**
-     * Fetch room data from API and navigate to it
-     */
     function fetchRoomAndNavigate(roomId) {
         fetch(`/api/rooms/${roomId}`)
             .then(response => response.json())
             .then(room => {
                 if (room && room.floor === {{ $floor }}) {
-                    // Room is on this floor, highlight it
-                    highlightRoom(room);
-                    drawPathToRoom(room);
-                    showRoomInfo(room);
+                    fromLocation = null;
+                    highlightRoom(room, 'to');
+                    showRoomInfo(room, 'destination');
                 }
             })
             .catch(error => console.error('Error fetching room:', error));
     }
 
-    /**
-     * Add click event listeners to all SVG room elements
-     */
-    function addClickHandlersToRooms() {
-        const svg = document.querySelector('.svg-wrapper svg');
-        if (!svg) return;
-
-        // Get all rect and path elements with fill colors (rooms) - include ALL colored shapes
-        const roomElements = svg.querySelectorAll('rect[fill], path[fill]');
-        
-        roomElements.forEach(element => {
-            const fill = element.getAttribute('fill');
-            
-            // Skip white, none, black or very light fills (walls/backgrounds)
-            if (!fill || fill === 'none' || fill === 'white' || fill === '#FFFFFF' || fill === 'black' || fill === '#000000') return;
-            
-            // Skip elements with very small areas (likely decorative lines)
-            const bbox = element.getBBox();
-            if (bbox.width < 30 || bbox.height < 30) return;
-            
-            // Add hover effect
-            element.style.cursor = 'pointer';
-            element.addEventListener('mouseenter', function() {
-                this.style.opacity = '0.6';
-                this.style.filter = 'brightness(1.2)';
-            });
-            element.addEventListener('mouseleave', function() {
-                this.style.opacity = '1';
-                this.style.filter = 'none';
-            });
-            
-            // Add click handler
-            element.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const bbox = this.getBBox();
-                const centerX = bbox.x + bbox.width / 2;
-                const centerY = bbox.y + bbox.height / 2;
-                
-                // Find nearest room from database based on coordinates
-                fetch(`/api/rooms/floor/{{ $floor }}`)
-                    .then(response => response.json())
-                    .then(rooms => {
-                        // Find closest room to clicked position
-                        let closestRoom = null;
-                        let minDistance = Infinity;
-                        
-                        rooms.forEach(room => {
-                            const dist = Math.sqrt(
-                                Math.pow(room.center_x - centerX, 2) + 
-                                Math.pow(room.center_y - centerY, 2)
-                            );
-                            if (dist < minDistance && dist < 100) { // Within 100px
-                                minDistance = dist;
-                                closestRoom = room;
-                            }
-                        });
-                        
-                        if (closestRoom) {
-                            highlightRoom(closestRoom);
-                            drawPathToRoom(closestRoom);
-                            showRoomInfo(closestRoom);
-                        } else {
-                            // No matching room found, use calculated center
-                            const tempRoom = {
-                                name: 'Selected Area',
-                                center_x: centerX,
-                                center_y: centerY,
-                                floor: {{ $floor }},
-                                type: 'room',
-                                description: 'Tap for directions'
-                            };
-                            highlightRoom(tempRoom);
-                            drawPathToRoom(tempRoom);
-                            showRoomInfo(tempRoom);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching rooms:', error);
-                        const tempRoom = {
-                            name: 'Selected Area',
-                            center_x: centerX,
-                            center_y: centerY,
-                            floor: {{ $floor }},
-                            type: 'room',
-                            description: 'Tap for directions'
-                        };
-                        highlightRoom(tempRoom);
-                        drawPathToRoom(tempRoom);
-                        showRoomInfo(tempRoom);
-                    });
-            });
-        });
+    function handleRoomClick(room) {
+        if (!fromLocation) {
+            // First click - set FROM location
+            fromLocation = room;
+            clearPath();
+            highlightRoom(room, 'from');
+            showRoomInfo(room, 'from');
+        } else {
+            // Second click - set TO location and draw path
+            highlightRoom(room, 'to');
+            drawPath(fromLocation, room);
+            showPathInfo(fromLocation, room);
+            fromLocation = null; // Reset for next selection
+        }
     }
+
+    function highlightRoom(room, type) {
+        // Remove existing highlight of same type
+        const existingHighlight = svg.querySelector(`#highlight-${type}`);
+        if (existingHighlight) existingHighlight.remove();
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('id', `highlight-${type}`);
+        circle.setAttribute('cx', room.center_x);
+        circle.setAttribute('cy', room.center_y);
+        circle.setAttribute('r', '20');
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', type === 'from' ? '#00FF00' : '#FF0000');
+        circle.setAttribute('stroke-width', '4');
+        
+        svg.appendChild(circle);
+    }
+
+    function clearPath() {
+        const existingPath = svg.querySelector('#direction-path');
+        const existingFrom = svg.querySelector('#highlight-from');
+        const existingTo = svg.querySelector('#highlight-to');
+        if (existingPath) existingPath.remove();
+        if (existingFrom) existingFrom.remove();
+        if (existingTo) existingTo.remove();
+    }
+
+    function drawPath(from, to) {
+        const existingPath = svg.querySelector('#direction-path');
+        if (existingPath) existingPath.remove();
+
+        // Simple straight line
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('id', 'direction-path');
+        line.setAttribute('x1', from.center_x);
+        line.setAttribute('y1', from.center_y);
+        line.setAttribute('x2', to.center_x);
+        line.setAttribute('y2', to.center_y);
+        line.setAttribute('stroke', '#FF0000');
+        line.setAttribute('stroke-width', '4');
+        line.setAttribute('stroke-dasharray', '10,5');
+        
+        svg.appendChild(line);
+    }
+
+    function showRoomInfo(room, type) {
+        removeInfoBox();
+        
+        const label = type === 'from' ? 'FROM' : 'TO';
+        const color = type === 'from' ? 'green' : 'red';
+        
+        const infoBox = document.createElement('div');
+        infoBox.id = 'room-info-box';
+        infoBox.className = 'fixed top-20 right-8 bg-white p-4 rounded-lg shadow-xl z-50 max-w-xs';
+        infoBox.style.borderLeft = `4px solid ${color}`;
+        infoBox.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-xs font-bold text-${color}-600">${label}</span>
+                <button onclick="this.closest('#room-info-box').remove();" class="text-gray-400 hover:text-gray-600">&times;</button>
+            </div>
+            <h3 class="font-bold text-gray-800">${room.name}</h3>
+            <p class="text-sm text-gray-600">${room.type}</p>
+            <p class="text-xs text-gray-500 mt-2">${type === 'from' ? 'Now click your destination' : 'Click anywhere to start new route'}</p>
+        `;
+        document.body.appendChild(infoBox);
+    }
+
+    function showPathInfo(from, to) {
+        removeInfoBox();
+        
+        const infoBox = document.createElement('div');
+        infoBox.id = 'room-info-box';
+        infoBox.className = 'fixed top-20 right-8 bg-white p-4 rounded-lg shadow-xl z-50 max-w-xs border-l-4 border-red-500';
+        infoBox.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-xs font-bold text-gray-600">ROUTE</span>
+                <button onclick="this.closest('#room-info-box').remove(); document.querySelector('#direction-path')?.remove(); document.querySelector('#highlight-from')?.remove(); document.querySelector('#highlight-to')?.remove();" class="text-gray-400 hover:text-gray-600">&times;</button>
+            </div>
+            <div class="mb-2">
+                <span class="text-xs text-green-600 font-semibold">FROM:</span>
+                <p class="font-bold text-gray-800">${from.name}</p>
+            </div>
+            <div>
+                <span class="text-xs text-red-600 font-semibold">TO:</span>
+                <p class="font-bold text-gray-800">${to.name}</p>
+            </div>
+            <p class="text-xs text-gray-500 mt-3">Click anywhere to start new route</p>
+        `;
+        document.body.appendChild(infoBox);
+    }
+
+    function removeInfoBox() {
+        const existing = document.querySelector('#room-info-box');
+        if (existing) existing.remove();
+    }
+});
+</script>
 
     /**
      * Highlight the target room with a pulsing red circle
