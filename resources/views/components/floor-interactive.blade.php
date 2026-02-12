@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // State: null = no selection, object = from location selected
     let fromLocation = null;
     
+    // Hallway Y coordinates for Floor 1 (main horizontal corridors)
+    const MAIN_HALLWAY_Y = 270;  // Between top and bottom rows
+    const LOWER_HALLWAY_Y = 500; // Between main floor and AMT area
+    
     // Check if there's a room parameter in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('room');
@@ -48,7 +52,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
                 
-                if (closestRoom && minDistance < 150) {
+                // Increased distance threshold for better click detection
+                if (closestRoom && minDistance < 200) {
                     handleRoomClick(closestRoom);
                 }
             });
@@ -77,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             // Second click - set TO location and draw path
             highlightRoom(room, 'to');
-            drawPath(fromLocation, room);
+            drawHallwayPath(fromLocation, room);
             showPathInfo(fromLocation, room);
             fromLocation = null; // Reset for next selection
         }
@@ -109,22 +114,73 @@ document.addEventListener('DOMContentLoaded', function () {
         if (existingTo) existingTo.remove();
     }
 
-    function drawPath(from, to) {
+    function drawHallwayPath(from, to) {
         const existingPath = svg.querySelector('#direction-path');
         if (existingPath) existingPath.remove();
 
-        // Simple straight line
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('id', 'direction-path');
-        line.setAttribute('x1', from.center_x);
-        line.setAttribute('y1', from.center_y);
-        line.setAttribute('x2', to.center_x);
-        line.setAttribute('y2', to.center_y);
-        line.setAttribute('stroke', '#FF0000');
-        line.setAttribute('stroke-width', '4');
-        line.setAttribute('stroke-dasharray', '10,5');
+        // Determine which hallway to use based on room positions
+        const fromY = from.center_y;
+        const toY = to.center_y;
         
-        svg.appendChild(line);
+        // Create path points through hallway
+        let pathPoints = [];
+        pathPoints.push({ x: from.center_x, y: from.center_y });
+        
+        // Determine the best hallway to use
+        // Top row rooms: y < 250
+        // Middle row rooms: y between 250 and 500
+        // Bottom row (AMT): y > 500
+        
+        const fromIsTop = fromY < 220;
+        const toIsTop = toY < 220;
+        const fromIsBottom = fromY > 500;
+        const toIsBottom = toY > 500;
+        
+        if (fromIsTop && toIsTop) {
+            // Both in top row - go through main hallway
+            pathPoints.push({ x: from.center_x, y: MAIN_HALLWAY_Y });
+            pathPoints.push({ x: to.center_x, y: MAIN_HALLWAY_Y });
+        } else if (fromIsBottom && toIsBottom) {
+            // Both in AMT area - go through lower hallway
+            pathPoints.push({ x: from.center_x, y: LOWER_HALLWAY_Y });
+            pathPoints.push({ x: to.center_x, y: LOWER_HALLWAY_Y });
+        } else if (!fromIsBottom && !toIsBottom) {
+            // Both in main area (top or middle) - use main hallway
+            pathPoints.push({ x: from.center_x, y: MAIN_HALLWAY_Y });
+            pathPoints.push({ x: to.center_x, y: MAIN_HALLWAY_Y });
+        } else {
+            // One in main area, one in AMT area - need to use both hallways
+            if (fromIsBottom) {
+                // Going from AMT to main area
+                pathPoints.push({ x: from.center_x, y: LOWER_HALLWAY_Y });
+                pathPoints.push({ x: 1000, y: LOWER_HALLWAY_Y }); // Connection point
+                pathPoints.push({ x: 1000, y: MAIN_HALLWAY_Y });
+                pathPoints.push({ x: to.center_x, y: MAIN_HALLWAY_Y });
+            } else {
+                // Going from main area to AMT
+                pathPoints.push({ x: from.center_x, y: MAIN_HALLWAY_Y });
+                pathPoints.push({ x: 1000, y: MAIN_HALLWAY_Y });
+                pathPoints.push({ x: 1000, y: LOWER_HALLWAY_Y }); // Connection point
+                pathPoints.push({ x: to.center_x, y: LOWER_HALLWAY_Y });
+            }
+        }
+        
+        pathPoints.push({ x: to.center_x, y: to.center_y });
+        
+        // Create SVG polyline from points
+        const pointsStr = pathPoints.map(p => `${p.x},${p.y}`).join(' ');
+        
+        const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        polyline.setAttribute('id', 'direction-path');
+        polyline.setAttribute('points', pointsStr);
+        polyline.setAttribute('fill', 'none');
+        polyline.setAttribute('stroke', '#FF0000');
+        polyline.setAttribute('stroke-width', '4');
+        polyline.setAttribute('stroke-dasharray', '10,5');
+        polyline.setAttribute('stroke-linecap', 'round');
+        polyline.setAttribute('stroke-linejoin', 'round');
+        
+        svg.appendChild(polyline);
     }
 
     function showRoomInfo(room, type) {
