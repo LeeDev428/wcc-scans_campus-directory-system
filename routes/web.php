@@ -91,10 +91,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // API Routes for Room Search & Navigation
 Route::prefix('api')->name('api.')->group(function () {
     Route::get('/rooms/search', [\App\Http\Controllers\API\RoomController::class, 'search'])->name('rooms.search');
+    Route::get('/rooms/types', [\App\Http\Controllers\API\RoomController::class, 'types'])->name('rooms.types');
     Route::get('/rooms/floor/{floor}', [\App\Http\Controllers\API\RoomController::class, 'byFloor'])->name('rooms.byFloor');
     Route::get('/rooms/{id}', [\App\Http\Controllers\API\RoomController::class, 'show'])->name('rooms.show');
     Route::post('/rooms/find-path', [\App\Http\Controllers\API\RoomController::class, 'findPath'])->name('rooms.findPath');
-    Route::get('/rooms/types', [\App\Http\Controllers\API\RoomController::class, 'types'])->name('rooms.types');
 });
 
 require __DIR__.'/auth.php';
