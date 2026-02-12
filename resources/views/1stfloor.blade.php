@@ -37,6 +37,9 @@
 <body style="background: linear-gradient(90deg, #164D30 0%, #185336 60%, #369976 100%);">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="1" />
+    
+    <!-- Room Search Component -->
+    <x-room-search />
 
     <!-- Main Content -->
     <div class="floor-container">
@@ -3754,5 +3757,150 @@
             </a>
         </div>
     </div>
+
+    <script>
+        // Interactive SVG Map
+        document.addEventListener('DOMContentLoaded', function() {
+            const svg = document.querySelector('.svg-wrapper svg');
+            const currentFloor = 1;
+            let pathElement = null;
+
+            // Listen for navigation events from search
+            window.addEventListener('navigate-to-room', function(e) {
+                const room = e.detail.room;
+                
+                if (room.floor !== currentFloor) {
+                    // Different floor - show message to change floor
+                    alert(`This room is on Floor ${room.floor}. Please navigate to Floor ${room.floor} first.`);
+                    window.location.href = `/floor/${room.floor}`;
+                    return;
+                }
+                
+                // Same floor - draw path and highlight
+                highlightRoom(room);
+                drawPathToRoom(room);
+            });
+
+            function highlightRoom(room) {
+                // Remove any existing highlights
+                const highlighted = svg.querySelectorAll('.room-highlight');
+                highlighted.forEach(el => el.remove());
+                
+                // Create highlight circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('class', 'room-highlight');
+                circle.setAttribute('cx', room.center_x);
+                circle.setAttribute('cy', room.center_y);
+                circle.setAttribute('r', '20');
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', '#FF0000');
+                circle.setAttribute('stroke-width', '4');
+                circle.setAttribute('stroke-dasharray', '10,5');
+                
+                // Animate the highlight
+                const animate = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
+                animate.setAttribute('attributeName', 'r');
+                animate.setAttribute('from', '20');
+                animate.setAttribute('to', '30');
+                animate.setAttribute('dur', '1s');
+                animate.setAttribute('repeatCount', 'indefinite');
+                circle.appendChild(animate);
+                
+                svg.appendChild(circle);
+                
+                // Show room info
+                showRoomInfo(room);
+            }
+
+            function drawPathToRoom(room) {
+                // Remove existing path
+                if (pathElement) {
+                    pathElement.remove();
+                }
+                
+                // Draw simple path from center of map to room
+                const centerX = svg.viewBox.baseVal.width / 2;
+                const centerY = svg.viewBox.baseVal.height / 2;
+                
+                pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathElement.setAttribute('d', `M${centerX},${centerY} L${room.center_x},${room.center_y}`);
+                pathElement.setAttribute('stroke', '#FF0000');
+                pathElement.setAttribute('stroke-width', '6');
+                pathElement.setAttribute('stroke-dasharray', '15,10');
+                pathElement.setAttribute('fill', 'none');
+                pathElement.setAttribute('marker-end', 'url(#arrowhead)');
+                
+                // Add arrowhead marker if it doesn't exist
+                let defs = svg.querySelector('defs');
+                if (!defs) {
+                    defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                    svg.insertBefore(defs, svg.firstChild);
+                }
+                
+                if (!svg.querySelector('#arrowhead')) {
+                    const marker = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+                    marker.setAttribute('id', 'arrowhead');
+                    marker.setAttribute('markerWidth', '10');
+                    marker.setAttribute('markerHeight', '7');
+                    marker.setAttribute('refX', '9');
+                    marker.setAttribute('refY', '3.5');
+                    marker.setAttribute('orient', 'auto');
+                    const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+                    polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
+                    polygon.setAttribute('fill', '#FF0000');
+                    marker.appendChild(polygon);
+                    defs.appendChild(marker);
+                }
+                
+                svg.appendChild(pathElement);
+                
+                // Animate the path
+                const length = pathElement.getTotalLength();
+                pathElement.style.strokeDasharray = length;
+                pathElement.style.strokeDashoffset = length;
+                pathElement.style.animation = 'dash 2s linear forwards';
+                
+                // Add CSS animation if not exists
+                if (!document.querySelector('#path-animation-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'path-animation-style';
+                    style.textContent = `
+                        @keyframes dash {
+                            to {
+                                stroke-dashoffset: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            function showRoomInfo(room) {
+                // Remove existing info box
+                const existing = document.querySelector('.room-info-box');
+                if (existing) existing.remove();
+                
+                // Create info box
+                const infoBox = document.createElement('div');
+                infoBox.className = 'room-info-box fixed top-24 right-8 bg-white p-4 rounded-lg shadow-2xl border-2 border-green-600 z-40 max-w-sm';
+                infoBox.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-lg font-bold text-gray-800">${room.name}</h3>
+                        <button onclick="this.parentElement.parentElement.remove()" class="text-gray-500 hover:text-gray-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-600">${room.description || room.type}</p>
+                    <div class="mt-2 pt-2 border-t">
+                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Floor ${room.floor}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(infoBox);
+            }
+        });
+    </script>
 </body>
 </html>
