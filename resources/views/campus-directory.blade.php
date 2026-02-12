@@ -115,21 +115,21 @@
 
         <!-- Content Area - Floor Selection -->
         <div class="flex-1 px-8 py-6 flex items-center justify-center overflow-auto">
-            <div class="grid grid-cols-4 gap-6 max-w-4xl">
+            <div class="grid grid-cols-8 gap-4 w-full max-w-7xl">
                 @for ($floor = 1; $floor <= 8; $floor++)
                     <a href="{{ route('floor.show', $floor) }}" 
-                       class="group relative bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl p-8 hover:bg-white/20 hover:border-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
+                       class="group relative bg-white/10 backdrop-blur-sm border-2 border-white/30 rounded-xl p-4 hover:bg-white/20 hover:border-white hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl">
                         <!-- Floor Number -->
                         <div class="text-center">
-                            <div class="text-6xl font-bold text-white mb-2">{{ $floor }}</div>
-                            <div class="text-white text-sm font-semibold tracking-wider">
+                            <div class="text-4xl font-bold text-white mb-1">{{ $floor }}</div>
+                            <div class="text-white text-xs font-semibold tracking-wider">
                                 {{ $floor == 1 ? '1ST' : ($floor == 2 ? '2ND' : ($floor == 3 ? '3RD' : $floor . 'TH')) }} FLOOR
                             </div>
                         </div>
                         
                         <!-- Hover Icon -->
-                        <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </div>
