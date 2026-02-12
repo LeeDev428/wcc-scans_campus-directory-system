@@ -2862,5 +2862,8 @@
             </a>
         </div>
     </div>
+
+    <!-- Interactive Floor Component -->
+    <x-floor-interactive :floor="2" />
 </body>
 </html>
