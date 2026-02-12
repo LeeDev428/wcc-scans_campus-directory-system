@@ -12,41 +12,62 @@ class RoomSeeder extends Seeder
         // Clear existing rooms (use query builder for compatibility)
         Room::query()->delete();
         
-        // Floor 1 Rooms - Based on actual SVG floor plan with accurate coordinates
+        // Floor 1 Rooms - Based on actual SVG coordinates (viewBox: 0 0 1821 870)
+        // Analyzed from SVG path data for accurate positioning
         $floor1Rooms = [
-            // Top Row - Classrooms (y ~ 140)
-            ['name' => 'Room 102 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 420, 'center_y' => 140, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 104 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 530, 'center_y' => 140, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 106 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 640, 'center_y' => 140, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 108 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 750, 'center_y' => 140, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 110 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 860, 'center_y' => 140, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 112 Registrar\'s Office', 'floor' => 1, 'type' => 'office', 'center_x' => 970, 'center_y' => 140, 'description' => 'Registrar\'s Office', 'is_searchable' => true],
+            // TOP ROW - Classrooms (from SVG: y=52 to y=210, center_y ~ 131)
+            // Room boundaries from SVG: 314.5, 448.5, 601, 755, 907.5, 1061
+            ['name' => 'Room 102 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 381, 'center_y' => 131, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 104 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 525, 'center_y' => 131, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 106 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 678, 'center_y' => 131, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 108 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 831, 'center_y' => 131, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 110 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 984, 'center_y' => 131, 'description' => 'Classroom', 'is_searchable' => true],
+            // Room 112 is separate: x=1082.5 to 1214.5
+            ['name' => "Room 112 Registrar's Office", 'floor' => 1, 'type' => 'office', 'center_x' => 1148, 'center_y' => 131, 'description' => "Registrar's Office", 'is_searchable' => true],
             
-            // Middle Row Bottom (y ~ 380)
-            ['name' => '1F Clinic', 'floor' => 1, 'type' => 'clinic', 'center_x' => 160, 'center_y' => 350, 'description' => 'First Floor Clinic', 'is_searchable' => true],
-            ['name' => 'Room 101', 'floor' => 1, 'type' => 'classroom', 'center_x' => 270, 'center_y' => 390, 'description' => 'Room 101', 'is_searchable' => true],
-            ['name' => 'Comfort Room', 'floor' => 1, 'type' => 'restroom', 'center_x' => 400, 'center_y' => 390, 'description' => 'Restroom', 'is_searchable' => true],
-            ['name' => 'Room 103-A Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 520, 'center_y' => 390, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 103-B Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 590, 'center_y' => 330, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'Room 105 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 660, 'center_y' => 390, 'description' => 'Classroom', 'is_searchable' => true],
-            ['name' => 'EE Shop', 'floor' => 1, 'type' => 'shop', 'center_x' => 790, 'center_y' => 380, 'description' => 'Electrical Engineering Shop', 'is_searchable' => true],
-            ['name' => 'Room 111 Cashier', 'floor' => 1, 'type' => 'office', 'center_x' => 920, 'center_y' => 380, 'description' => 'Cashier Office', 'is_searchable' => true],
-            ['name' => 'Career Center', 'floor' => 1, 'type' => 'office', 'center_x' => 1150, 'center_y' => 380, 'description' => 'Career Center Office', 'is_searchable' => true],
+            // BOTTOM ROW - Left side (from SVG: y=359 to y=460, center_y ~ 410)
+            // 1F Clinic: path M7.5 260.361...V461 (orange area, x=7-87)
+            ['name' => '1F Clinic', 'floor' => 1, 'type' => 'clinic', 'center_x' => 47, 'center_y' => 360, 'description' => 'First Floor Clinic', 'is_searchable' => true],
+            // Room 101: path M295.5 359V460H87.5 (gray area, x=87-295)
+            ['name' => 'Room 101', 'floor' => 1, 'type' => 'classroom', 'center_x' => 191, 'center_y' => 410, 'description' => 'Room 101', 'is_searchable' => true],
+            // Comfort Room: rect x=314.5 y=360 width=152 height=99 (green area)
+            ['name' => 'Comfort Room', 'floor' => 1, 'type' => 'restroom', 'center_x' => 390, 'center_y' => 410, 'description' => 'Restroom', 'is_searchable' => true],
             
-            // Bottom Section - AMT Area
-            ['name' => 'AMT Laboratory', 'floor' => 1, 'type' => 'lab', 'center_x' => 920, 'center_y' => 700, 'description' => 'Aviation Maintenance Technology Laboratory', 'is_searchable' => true],
-            ['name' => 'Comfort Room AMT', 'floor' => 1, 'type' => 'restroom', 'center_x' => 780, 'center_y' => 770, 'description' => 'AMT Area Restroom', 'is_searchable' => true],
-            ['name' => 'Hangar', 'floor' => 1, 'type' => 'hangar', 'center_x' => 1200, 'center_y' => 700, 'description' => 'Aircraft Hangar', 'is_searchable' => true],
+            // BOTTOM ROW - Center (from SVG: path M468.5 301V459H774.5)
+            ['name' => 'Room 103-A Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 430, 'center_y' => 410, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 103-B Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 500, 'center_y' => 355, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'Room 105 Classroom', 'floor' => 1, 'type' => 'classroom', 'center_x' => 565, 'center_y' => 410, 'description' => 'Classroom', 'is_searchable' => true],
+            ['name' => 'EE Shop', 'floor' => 1, 'type' => 'shop', 'center_x' => 720, 'center_y' => 385, 'description' => 'Electrical Engineering Shop', 'is_searchable' => true],
             
-            // Exits
-            ['name' => 'Exit Main', 'floor' => 1, 'type' => 'exit', 'center_x' => 295, 'center_y' => 105, 'description' => 'Main Building Exit', 'is_searchable' => true],
-            ['name' => 'Exit East', 'floor' => 1, 'type' => 'exit', 'center_x' => 1095, 'center_y' => 105, 'description' => 'East Side Exit', 'is_searchable' => true],
-            ['name' => 'Exit Career Center', 'floor' => 1, 'type' => 'exit', 'center_x' => 1280, 'center_y' => 240, 'description' => 'Career Center Exit', 'is_searchable' => true],
-            ['name' => 'Exit Hangar', 'floor' => 1, 'type' => 'exit', 'center_x' => 1300, 'center_y' => 535, 'description' => 'Hangar Area Exit', 'is_searchable' => true],
+            // BOTTOM ROW - Right (from SVG: path M1080.5 301V459H774.5)
+            ['name' => 'Room 111 Cashier', 'floor' => 1, 'type' => 'office', 'center_x' => 875, 'center_y' => 385, 'description' => 'Cashier Office', 'is_searchable' => true],
             
-            // Stairs and Elevator
-            ['name' => 'Stairs', 'floor' => 1, 'type' => 'stairs', 'center_x' => 350, 'center_y' => 190, 'description' => 'Main Stairway', 'is_searchable' => true],
-            ['name' => 'Elevator', 'floor' => 1, 'type' => 'elevator', 'center_x' => 1175, 'center_y' => 345, 'description' => 'Building Elevator', 'is_searchable' => true],
+            // RIGHT SIDE - Career Center area (from SVG: path starting at 1506.5)
+            ['name' => 'Career Center', 'floor' => 1, 'type' => 'office', 'center_x' => 1250, 'center_y' => 355, 'description' => 'Career Center Office', 'is_searchable' => true],
+            
+            // BOTTOM SECTION - AMT Area (yellow area from SVG: y=590 to y=858)
+            ['name' => 'AMT Laboratory', 'floor' => 1, 'type' => 'lab', 'center_x' => 870, 'center_y' => 720, 'description' => 'Aviation Maintenance Technology Laboratory', 'is_searchable' => true],
+            // AMT Comfort Room: path at bottom of AMT area
+            ['name' => 'Comfort Room AMT', 'floor' => 1, 'type' => 'restroom', 'center_x' => 700, 'center_y' => 820, 'description' => 'AMT Area Restroom', 'is_searchable' => true],
+            
+            // HANGAR Area (from SVG: path starting x=1507.5, gray/light area with planes)
+            ['name' => 'Hangar', 'floor' => 1, 'type' => 'hangar', 'center_x' => 1150, 'center_y' => 610, 'description' => 'Aircraft Hangar', 'is_searchable' => true],
+            
+            // CR (small restroom near stairs, right side)
+            ['name' => 'CR', 'floor' => 1, 'type' => 'restroom', 'center_x' => 1030, 'center_y' => 530, 'description' => 'Restroom near stairs', 'is_searchable' => true],
+            
+            // Exits (green boxes in SVG)
+            ['name' => 'Exit Main', 'floor' => 1, 'type' => 'exit', 'center_x' => 220, 'center_y' => 110, 'description' => 'Main Building Exit', 'is_searchable' => true],
+            ['name' => 'Exit East', 'floor' => 1, 'type' => 'exit', 'center_x' => 1055, 'center_y' => 110, 'description' => 'East Side Exit', 'is_searchable' => true],
+            ['name' => 'Exit Career Center', 'floor' => 1, 'type' => 'exit', 'center_x' => 1280, 'center_y' => 255, 'description' => 'Career Center Exit', 'is_searchable' => true],
+            ['name' => 'Exit Hangar', 'floor' => 1, 'type' => 'exit', 'center_x' => 1280, 'center_y' => 610, 'description' => 'Hangar Area Exit', 'is_searchable' => true],
+            
+            // Stairs (multiple locations)
+            ['name' => 'Stairs Main', 'floor' => 1, 'type' => 'stairs', 'center_x' => 280, 'center_y' => 100, 'description' => 'Main Stairway', 'is_searchable' => true],
+            ['name' => 'Stairs East', 'floor' => 1, 'type' => 'stairs', 'center_x' => 1000, 'center_y' => 420, 'description' => 'East Stairway', 'is_searchable' => true],
+            
+            // Elevator
+            ['name' => 'Elevator', 'floor' => 1, 'type' => 'elevator', 'center_x' => 1135, 'center_y' => 365, 'description' => 'Building Elevator', 'is_searchable' => true],
         ];
         
         foreach ($floor1Rooms as $room) {
