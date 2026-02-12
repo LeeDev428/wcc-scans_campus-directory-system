@@ -3945,5 +3945,8 @@
             </a>
         </div>
     </div>
+
+    <!-- Interactive Floor Component -->
+    <x-floor-interactive :floor="3" />
 </body>
 </html>
