@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            //
+            $table->tinyInteger('rating')->nullable()->after('status'); // 1-6 emoji rating
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tickets', function (Blueprint $table) {
-            //
+            $table->dropColumn('rating');
         });
     }
 };
