@@ -2177,7 +2177,8 @@
         </div>
 
         <!-- Back Button -->
-        <div class="text-center mt-2 mb-2">
+        <!-- Back Buttons -->
+        <div class="flex justify-center gap-4 mt-2 mb-2">
             <a href="{{ route('homepage') }}" 
                class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 shadow-md hover:shadow-lg">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2185,7 +2186,28 @@
                 </svg>
                 Back to Homepage
             </a>
+            <a href="{{ route('campus.directory') }}" 
+               class="inline-flex items-center px-4 py-2 bg-white text-green-800 text-sm font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-md hover:shadow-lg">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Campus Directory
+            </a>
         </div>
     </div>
+    <script>
+        let inactivityTimer;
+        function resetTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                window.location.href = '{{ route('welcome') }}';
+            }, 12000);
+        }
+        ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'].forEach(event => {
+            document.addEventListener(event, resetTimer, true);
+        });
+        resetTimer();
+    </script>
 </body>
 </html>
