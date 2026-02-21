@@ -15,16 +15,17 @@ class TicketController extends Controller
     {
         $request->validate([
             'ticket_message' => 'required|string|max:1000',
+            'rating' => 'nullable|integer|min:1|max:6',
         ]);
 
-        // Create ticket
+        // Create ticket with optional rating
         Ticket::create([
             'message' => $request->ticket_message,
             'status' => 'pending',
+            'rating' => $request->rating ?: null,
         ]);
 
-        // Redirect to rating page
-        return redirect()->route('rate.experience');
+        return redirect()->route('homepage')->with('success', 'Thank you for your feedback!');
     }
 
     /**
