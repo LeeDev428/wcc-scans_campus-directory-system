@@ -66,10 +66,22 @@ class TicketController extends Controller
         }
         
         $tickets = $query->orderBy('created_at', 'desc')->paginate(20);
+
+        // Ratings from tickets (new)
+        $ticketRatingsAvg = Ticket::whereNotNull('rating')->avg('rating');
+        $ticketRatingsCount = Ticket::whereNotNull('rating')->count();
+
+        // Ratings from standalone rate-experience page (legacy)
         $averageRating = Rating::avg('rating');
         $totalRatings = Rating::count();
         
-        return view('admin.tickets.index', compact('tickets', 'averageRating', 'totalRatings'));
+        return view('admin.tickets.index', compact(
+            'tickets',
+            'averageRating',
+            'totalRatings',
+            'ticketRatingsAvg',
+            'ticketRatingsCount'
+        ));
     }
 
     /**
