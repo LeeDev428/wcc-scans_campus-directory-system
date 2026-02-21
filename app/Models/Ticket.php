@@ -12,6 +12,7 @@ class Ticket extends Model
     protected $fillable = [
         'message',
         'status',
+        'rating',
     ];
 
     protected $casts = [
