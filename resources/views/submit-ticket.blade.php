@@ -46,12 +46,12 @@
             <div class="max-w-3xl w-full">
                 <form method="POST" action="{{ route('ticket.store') }}" class="space-y-4">
                     @csrf
-                    
+
                     <!-- Text Input Field -->
                     <div class="border-2 border-white p-4 rounded-lg">
-                        <textarea 
-                            name="ticket_message" 
-                            rows="6"
+                        <textarea
+                            name="ticket_message"
+                            rows="4"
                             class="w-full px-4 py-3 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter your feedback or concern..."
                             required
@@ -61,10 +61,45 @@
                         @enderror
                     </div>
 
+                    <!-- Rate Your Experience -->
+                    <div class="border-2 border-white p-6 rounded-lg">
+                        <h3 class="text-white text-xl font-bold text-center tracking-wider mb-5">PLEASE RATE YOUR EXPERIENCE</h3>
+                        <input type="hidden" name="rating" id="ratingInput">
+                        <div class="flex justify-center items-center space-x-4">
+                            <!-- Angry Red -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="1" title="Very Unhappy">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#ef4444"/><circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/><path d="M 30 70 Q 50 55 70 70" stroke="#000" stroke-width="3" fill="none"/></svg>
+                            </div>
+                            <!-- Sad Orange -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="2" title="Unhappy">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#f97316"/><circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/><path d="M 30 65 Q 50 55 70 65" stroke="#000" stroke-width="3" fill="none"/></svg>
+                            </div>
+                            <!-- Neutral Yellow -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="3" title="Neutral">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#eab308"/><circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/><line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/></svg>
+                            </div>
+                            <!-- Light Green -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="4" title="Satisfied">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#84cc16"/><circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/><path d="M 30 60 Q 50 70 70 60" stroke="#000" stroke-width="3" fill="none"/></svg>
+                            </div>
+                            <!-- Happy Green -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="5" title="Happy">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#22c55e"/><circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/><path d="M 30 55 Q 50 75 70 55" stroke="#000" stroke-width="3" fill="none"/></svg>
+                            </div>
+                            <!-- Very Happy Teal -->
+                            <div class="emoji-rating cursor-pointer opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-200" data-rating="6" title="Very Happy">
+                                <svg class="w-14 h-14" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#14b8a6"/><circle cx="35" cy="35" r="5" fill="#000"/><circle cx="65" cy="35" r="5" fill="#000"/><path d="M 25 55 Q 50 80 75 55" stroke="#000" stroke-width="3" fill="none"/></svg>
+                            </div>
+                        </div>
+                        @error('rating')
+                            <p class="text-red-300 text-center text-sm mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <!-- Submit Button -->
                     <div class="flex justify-center">
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             class="bg-white text-green-800 font-bold px-12 py-3 rounded-lg hover:bg-gray-100 transition text-lg"
                         >
                             SUBMIT
@@ -73,7 +108,7 @@
                 </form>
 
                 <!-- Description Text -->
-                <div class="mt-6 text-center">
+                <div class="mt-4 text-center">
                     <p class="text-white text-xs leading-relaxed">
                         WE ARE COMMITTED TO IMPROVING YOUR LEARNING ENVIRONMENT.<br>
                         THIS IS A CONFIDENTIAL CHANNEL FOR YOU TO PROVIDE FEEDBACK<br>
@@ -91,6 +126,19 @@
     </div>
     
     <script>
+        // Emoji rating selection
+        document.querySelectorAll('.emoji-rating').forEach(emoji => {
+            emoji.addEventListener('click', function () {
+                document.querySelectorAll('.emoji-rating').forEach(e => {
+                    e.classList.remove('opacity-100', 'scale-125');
+                    e.classList.add('opacity-50');
+                });
+                this.classList.remove('opacity-50');
+                this.classList.add('opacity-100', 'scale-125');
+                document.getElementById('ratingInput').value = this.dataset.rating;
+            });
+        });
+
         // Auto-redirect to homepage after 12 seconds of inactivity
         let inactivityTimer;
         
