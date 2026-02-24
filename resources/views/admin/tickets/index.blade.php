@@ -8,39 +8,28 @@
     <div class="space-y-6">
 
         <!-- Rating Summary -->
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
-                <p class="text-sm text-gray-500 uppercase tracking-wider font-medium">Avg. Rating (from Tickets)</p>
-                <div class="flex items-center mt-2 space-x-3">
-                    <span class="text-3xl font-bold text-gray-900">
-                        {{ $ticketRatingsAvg ? number_format($ticketRatingsAvg, 1) : '—' }}
-                        <span class="text-base text-gray-400">/ 6</span>
-                    </span>
-                    @if($ticketRatingsAvg)
-                        @php
-                            $avg = round($ticketRatingsAvg);
-                            $colors = [1=>'#ef4444',2=>'#f97316',3=>'#eab308',4=>'#84cc16',5=>'#22c55e',6=>'#14b8a6'];
-                        @endphp
-                        <svg class="w-8 h-8" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45" fill="{{ $colors[$avg] ?? '#22c55e' }}"/>
-                            <circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/>
-                            @if($avg <= 2)<path d="M 30 70 Q 50 55 70 70" stroke="#000" stroke-width="3" fill="none"/>
-                            @elseif($avg == 3)<line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/>
-                            @else<path d="M 30 55 Q 50 75 70 55" stroke="#000" stroke-width="3" fill="none"/>@endif
-                        </svg>
-                    @endif
+        <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+            <p class="text-sm text-gray-500 uppercase tracking-wider font-medium mb-3">Average Experience Rating</p>
+            <div class="flex items-center space-x-4">
+                @php
+                    $avgRound = round($ticketRatingsAvg ?? 0);
+                    $tColors = [1=>'#ef4444',2=>'#f97316',3=>'#eab308',4=>'#84cc16',5=>'#22c55e',6=>'#14b8a6'];
+                    $tLabels = [1=>'Very Unhappy',2=>'Unhappy',3=>'Neutral',4=>'Satisfied',5=>'Happy',6=>'Very Happy'];
+                @endphp
+                @if($ticketRatingsAvg)
+                    <svg class="w-12 h-12 flex-shrink-0" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="{{ $tColors[$avgRound] ?? '#22c55e' }}"/>
+                        <circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/>
+                        @if($avgRound <= 2)<path d="M 30 70 Q 50 55 70 70" stroke="#000" stroke-width="3" fill="none"/>
+                        @elseif($avgRound == 3)<line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/>
+                        @else<path d="M 30 55 Q 50 75 70 55" stroke="#000" stroke-width="3" fill="none"/>@endif
+                    </svg>
+                @endif
+                <div>
+                    <span class="text-3xl font-bold text-gray-900">{{ $ticketRatingsAvg ? number_format($ticketRatingsAvg, 1) : '—' }}<span class="text-base text-gray-400"> / 6</span></span>
+                    <p class="text-sm text-gray-500 mt-0.5">{{ $ticketRatingsAvg ? ($tLabels[$avgRound] ?? '') : 'No ratings yet' }}</p>
+                    <p class="text-xs text-gray-400">Based on {{ $ticketRatingsCount }} rated ticket(s)</p>
                 </div>
-                <p class="text-sm text-gray-400 mt-1">Based on {{ $ticketRatingsCount }} rated ticket(s)</p>
-            </div>
-            <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
-                <p class="text-sm text-gray-500 uppercase tracking-wider font-medium">Avg. Rating (Standalone Page)</p>
-                <div class="flex items-center mt-2 space-x-3">
-                    <span class="text-3xl font-bold text-gray-900">
-                        {{ $averageRating ? number_format($averageRating, 1) : '—' }}
-                        <span class="text-base text-gray-400">/ 6</span>
-                    </span>
-                </div>
-                <p class="text-sm text-gray-400 mt-1">Based on {{ $totalRatings }} standalone rating(s)</p>
             </div>
         </div>
 
