@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
-use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,19 +17,20 @@ class DashboardController extends Controller
         $pendingTickets = Ticket::where('status', 'pending')->count();
         $reviewedTickets = Ticket::where('status', 'reviewed')->count();
         $resolvedTickets = Ticket::where('status', 'resolved')->count();
-        
-        $totalRatings = Rating::count();
-        $averageRating = Rating::avg('rating');
-        
-        // Rating distribution
+
+        // Ratings sourced from tickets (nullable rating column)
+        $totalRatings = Ticket::whereNotNull('rating')->count();
+        $averageRating = Ticket::whereNotNull('rating')->avg('rating');
+
+        // Emoji rating distribution from tickets
         $ratingDistribution = [];
         for ($i = 1; $i <= 6; $i++) {
-            $ratingDistribution[$i] = Rating::where('rating', $i)->count();
+            $ratingDistribution[$i] = Ticket::where('rating', $i)->count();
         }
-        
+
         // Recent tickets
         $recentTickets = Ticket::orderBy('created_at', 'desc')->take(5)->get();
-        
+
         return view('admin.dashboard', compact(
             'totalTickets',
             'pendingTickets',
