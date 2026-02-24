@@ -53,8 +53,7 @@
                             name="ticket_message"
                             rows="4"
                             class="w-full px-4 py-3 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-white"
-                            placeholder="Enter your feedback or concern..."
-                            required
+                            placeholder="Enter your feedback or concern... (optional)"
                         ></textarea>
                         @error('ticket_message')
                             <p class="text-red-300 text-sm mt-2">{{ $message }}</p>
