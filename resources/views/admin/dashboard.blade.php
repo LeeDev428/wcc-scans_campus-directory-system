@@ -92,34 +92,84 @@
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Average Rating</h3>
-                    <div class="text-center">
-                        <div class="text-6xl font-bold text-green-600">
-                            {{ number_format($averageRating ?? 0, 2) }}
+                    @php
+                        $avgRound = round($averageRating ?? 0);
+                        $emojiColors = [1=>'#ef4444',2=>'#f97316',3=>'#eab308',4=>'#84cc16',5=>'#22c55e',6=>'#14b8a6'];
+                        $emojiLabels = [1=>'Very Unhappy',2=>'Unhappy',3=>'Neutral',4=>'Satisfied',5=>'Happy',6=>'Very Happy'];
+                    @endphp
+                    <div class="flex items-center justify-center space-x-6">
+                        @if($totalRatings > 0)
+                            <svg class="w-20 h-20" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="{{ $emojiColors[$avgRound] ?? '#22c55e' }}"/>
+                                <circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/>
+                                @if($avgRound <= 2)
+                                    <path d="M 30 70 Q 50 55 70 70" stroke="#000" stroke-width="3" fill="none"/>
+                                @elseif($avgRound == 3)
+                                    <line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/>
+                                @else
+                                    <path d="M 30 55 Q 50 75 70 55" stroke="#000" stroke-width="3" fill="none"/>
+                                @endif
+                            </svg>
+                        @else
+                            <svg class="w-20 h-20 opacity-20" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" fill="#9ca3af"/>
+                                <circle cx="35" cy="40" r="5" fill="#000"/><circle cx="65" cy="40" r="5" fill="#000"/>
+                                <line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/>
+                            </svg>
+                        @endif
+                        <div>
+                            <div class="text-5xl font-bold text-gray-900">
+                                {{ $totalRatings > 0 ? number_format($averageRating, 1) : '—' }}
+                                <span class="text-xl text-gray-400">/ 6</span>
+                            </div>
+                            <div class="text-gray-500 mt-1 text-sm">{{ $totalRatings > 0 ? ($emojiLabels[$avgRound] ?? '') : 'No ratings yet' }}</div>
+                            <div class="text-xs text-gray-400 mt-1">Based on {{ $totalRatings }} rating(s)</div>
                         </div>
-                        <div class="text-gray-500 mt-2">out of 6.00</div>
-                        <div class="text-sm text-gray-400 mt-1">Based on {{ $totalRatings }} ratings</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Rating Distribution -->
+            <!-- Emoji Rating Distribution -->
             <div class="bg-white overflow-hidden shadow-sm rounded-lg">
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Rating Distribution</h3>
-                    <div class="space-y-2">
-                        @foreach([6,5,4,3,2,1] as $rating)
+                    @php
+                        $distEmojis = [
+                            6 => ['color'=>'#14b8a6','label'=>'Very Happy'],
+                            5 => ['color'=>'#22c55e','label'=>'Happy'],
+                            4 => ['color'=>'#84cc16','label'=>'Satisfied'],
+                            3 => ['color'=>'#eab308','label'=>'Neutral'],
+                            2 => ['color'=>'#f97316','label'=>'Unhappy'],
+                            1 => ['color'=>'#ef4444','label'=>'Very Unhappy'],
+                        ];
+                    @endphp
+                    <div class="space-y-3">
+                        @foreach($distEmojis as $r => $meta)
                             @php
-                                $count = $ratingDistribution[$rating] ?? 0;
-                                $percentage = $totalRatings > 0 ? ($count / $totalRatings) * 100 : 0;
+                                $count = $ratingDistribution[$r] ?? 0;
+                                $pct = $totalRatings > 0 ? ($count / $totalRatings) * 100 : 0;
                             @endphp
-                            <div class="flex items-center">
-                                <div class="w-12 text-sm font-medium text-gray-700">{{ $rating }} ⭐</div>
-                                <div class="flex-1 mx-3">
-                                    <div class="bg-gray-200 rounded-full h-4">
-                                        <div class="bg-green-600 h-4 rounded-full" style="width: {{ $percentage }}%"></div>
+                            <div class="flex items-center gap-3">
+                                <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="45" fill="{{ $meta['color'] }}"/>
+                                    <circle cx="35" cy="40" r="4" fill="#000"/><circle cx="65" cy="40" r="4" fill="#000"/>
+                                    @if($r <= 2)
+                                        <path d="M 30 70 Q 50 55 70 70" stroke="#000" stroke-width="3" fill="none"/>
+                                    @elseif($r == 3)
+                                        <line x1="30" y1="65" x2="70" y2="65" stroke="#000" stroke-width="3"/>
+                                    @else
+                                        <path d="M 30 55 Q 50 75 70 55" stroke="#000" stroke-width="3" fill="none"/>
+                                    @endif
+                                </svg>
+                                <div class="flex-1">
+                                    <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                        <span>{{ $meta['label'] }}</span>
+                                        <span>{{ $count }}</span>
+                                    </div>
+                                    <div class="bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full transition-all" style="width: {{ $pct }}%; background-color: {{ $meta['color'] }}"></div>
                                     </div>
                                 </div>
-                                <div class="w-12 text-right text-sm text-gray-600">{{ $count }}</div>
                             </div>
                         @endforeach
                     </div>
