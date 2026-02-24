@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
-use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -67,18 +66,12 @@ class TicketController extends Controller
         
         $tickets = $query->orderBy('created_at', 'desc')->paginate(20);
 
-        // Ratings from tickets (new)
+        // Ratings from tickets
         $ticketRatingsAvg = Ticket::whereNotNull('rating')->avg('rating');
         $ticketRatingsCount = Ticket::whereNotNull('rating')->count();
 
-        // Ratings from standalone rate-experience page (legacy)
-        $averageRating = Rating::avg('rating');
-        $totalRatings = Rating::count();
-        
         return view('admin.tickets.index', compact(
             'tickets',
-            'averageRating',
-            'totalRatings',
             'ticketRatingsAvg',
             'ticketRatingsCount'
         ));
