@@ -13,16 +13,19 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ticket_message' => 'required|string|max:1000',
+            'ticket_message' => 'nullable|string|max:1000',
             'rating' => 'nullable|integer|min:1|max:6',
         ]);
 
-        // Create ticket with optional rating
-        Ticket::create([
-            'message' => $request->ticket_message,
-            'status' => 'pending',
-            'rating' => $request->rating ?: null,
-        ]);
+        // Only save if there's a message or a rating
+        if ($request->filled('ticket_message') || $request->filled('rating')) {
+            Ticket::create([
+                'message' => $request->ticket_message ?? '',
+                'status' => 'pending',
+                'rating' => $request->rating ?: null,
+            ]);
+        }
+
 
         return redirect()->route('homepage')->with('success', 'Thank you for your feedback!');
     }
