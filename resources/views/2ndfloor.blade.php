@@ -21,20 +21,18 @@
         }
         .svg-wrapper {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
+            display: flex;
+            align-items: stretch;
         }
         .svg-wrapper svg {
-          max-width: 85%;
-            max-height: 95%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
     </style>
 </head>
-<body style="background: linear-gradient(90deg, #164D30 0%, #185336 60%, #369976 100%);">
+<body style="background: linear-gradient(90deg);">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="2" />
 
@@ -42,8 +40,8 @@
     <div class="floor-container">
         <!-- Header -->
         <div class="text-center mb-4">
-            <h1 class="text-2xl font-bold text-white mb-1">2nd Floor</h1>
-            <p class="text-sm text-white/70">WCC SCAN Campus Directory</p>
+            <h1 class="text-2xl font-bold text-black mb-1">2nd Floor</h1>
+            <p class="text-sm text-black/70">WCC SCAN Campus Directory</p>
         </div>
 
         <!-- SVG Container -->
