@@ -21,16 +21,14 @@
         }
         .svg-wrapper {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
+            display: flex;
+            align-items: stretch;
         }
         .svg-wrapper svg {
-          max-width: 85%;
-            max-height: 95%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
+            display: block;
         }
     </style>
 </head>
