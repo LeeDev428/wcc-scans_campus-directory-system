@@ -42,8 +42,8 @@
     <div class="floor-container">
         <!-- Header -->
         <div class="text-center mb-4">
-            <h1 class="text-2xl font-bold text-gray-800 mb-1">5th Floor</h1>
-            <p class="text-sm text-gray-600">WCC SCAN Campus Directory</p>
+            <h1 class="text-2xl font-bold text-white mb-1">5th Floor</h1>
+            <p class="text-sm text-white/70">WCC SCAN Campus Directory</p>
         </div>
 
         <!-- SVG Container -->
