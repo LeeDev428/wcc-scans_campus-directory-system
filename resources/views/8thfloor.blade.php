@@ -34,7 +34,7 @@
         }
     </style>
 </head>
-<body style="background: linear-gradient(90deg, #164D30 0%, #185336 60%, #369976 100%);">
+<body style="background: linear-gradient(90deg);">
     <!-- Floor Navigator Component -->
     <x-floor-navigator :currentFloor="8" />
 
@@ -42,8 +42,8 @@
     <div class="floor-container">
         <!-- Header -->
         <div class="text-center mb-4">
-            <h1 class="text-2xl font-bold text-white mb-1">8th Floor</h1>
-            <p class="text-sm text-white/70">WCC SCAN Campus Directory</p>
+            <h1 class="text-2xl font-bold text-black mb-1">8th Floor</h1>
+            <p class="text-sm text-black/70">WCC SCAN Campus Directory</p>
         </div>
 
         <!-- SVG Container -->
